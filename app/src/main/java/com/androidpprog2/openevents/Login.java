@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://puigmal.salle.url.edu/api/v2")
+                        .baseUrl("http://puigmal.salle.url.edu/api/v2/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
