@@ -41,6 +41,11 @@ public class Register extends AppCompatActivity {
 
                 JsonplaceholderAPI service = retrofit.create(JsonplaceholderAPI.class);
 
+                //ASSIGNAR CADA VARIABLE DE USER AMB LA INFO QUE S'ENTRA.
+                //LI PASO VERDADERAMENT EL JSON AMB LA INFO? CREC QUE PER AIXO FALLA I SEMPRE SURT TOAST INCORRECTE
+
+                //A LA CLASSE DE LOGIN HAURE DE RECUPERAR LA INFO DE REGISTER I COMPROBAR QUE ES CORRECTE.
+
                 service.getTodo().enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
