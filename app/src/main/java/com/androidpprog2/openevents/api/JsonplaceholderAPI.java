@@ -10,4 +10,7 @@ public interface JsonplaceholderAPI {
 
     @POST("/users")
     Call<User> getTodo();
+
+    @POST("users/login")
+    Call<User> getTodos();
 }
