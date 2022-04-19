@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 
+    private EditText email,password;
+    private Button sign_in;
+    private TextView sign_up;
+
+
+
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -33,7 +40,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        TextView sign_up = this.findViewById(R.id.SignUp);
+        email = (EditText)findViewById(R.id.editText);
+        password = (EditText)findViewById(R.id.editText2);
+        sign_in=(Button)findViewById(R.id.sign_in);
+        sign_up=(TextView)findViewById(R.id.SignUp);
+
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,10 +53,15 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        Button sign_in = this.findViewById(R.id.sign_in);
+       // Button sign_in = this.findViewById(R.id.sign_in);
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    Toast.makeText(Login.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("http://puigmal.salle.url.edu/api/v2/")
                         .addConverterFactory(GsonConverterFactory.create())
