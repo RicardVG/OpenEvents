@@ -25,9 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email,password;
+    private EditText emailLogin,passwordLogin;
     private Button sign_in;
     private TextView sign_up;
+    private String emailRegister, passwordRegister;
 
 
 
@@ -42,8 +43,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        email = (EditText)findViewById(R.id.editText);
-        password = (EditText)findViewById(R.id.editText2);
+        emailRegister = getIntent().getStringExtra("email");
+        passwordRegister = getIntent().getStringExtra("password");
+
+
+        emailLogin = (EditText)findViewById(R.id.editText);
+        passwordLogin = (EditText)findViewById(R.id.editText2);
         sign_in=(Button)findViewById(R.id.sign_in);
         sign_up=(TextView)findViewById(R.id.SignUp);
 
@@ -59,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                if (emailLogin.getText().toString().isEmpty() || passwordLogin.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -87,8 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
+
                     }
                 });
+
             }
         });
     }
