@@ -72,7 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                 Log.d("MAIN", "TODOOK");
                 Intent intent = LoginActivity.newIntent(RegisterActivity.this);
-               ;
                 startActivity(intent);
             }
 

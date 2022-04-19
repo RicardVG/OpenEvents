@@ -15,7 +15,7 @@ public interface OpenEventsAPI {
     @POST("users/login")
     Call<User> getTodos();
 
-    @POST("users/Register")
+    @POST("users/")
     Call<User> createPost(@Body User user);
 
 
