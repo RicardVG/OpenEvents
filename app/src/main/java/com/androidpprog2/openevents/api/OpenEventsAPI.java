@@ -7,7 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface JsonplaceholderAPI {
+public interface OpenEventsAPI {
 
     @POST("/users")
     Call<User> getTodo();

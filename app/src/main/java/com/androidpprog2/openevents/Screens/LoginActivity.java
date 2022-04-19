@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents;
+package com.androidpprog2.openevents.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidpprog2.openevents.api.JsonplaceholderAPI;
+import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.User;
+import com.androidpprog2.openevents.api.OpenEventsAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText email,password;
     private Button sign_in;
@@ -30,7 +32,7 @@ public class Login extends AppCompatActivity {
 
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, Login.class);
+        Intent intent = new Intent(packageContext, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
@@ -48,7 +50,7 @@ public class Login extends AppCompatActivity {
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = Register.newIntent(Login.this);
+                Intent intent = RegisterActivity.newIntent(LoginActivity.this);
                 startActivity(intent);
             }
         });
@@ -58,7 +60,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
-                    Toast.makeText(Login.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -67,7 +69,7 @@ public class Login extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                JsonplaceholderAPI service = retrofit.create(JsonplaceholderAPI.class);
+                OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
                 service.getTodos().enqueue(new Callback<User>() {
                     @Override
@@ -78,6 +80,8 @@ public class Login extends AppCompatActivity {
                         int nuevoAccessToken = 0;
                         editor.putInt("accessToken", nuevoAccessToken);
                         editor.commit();
+                        Intent intent = EventsActivity.newIntent(LoginActivity.this);
+                        startActivity(intent);
                     }
 
                     @Override
