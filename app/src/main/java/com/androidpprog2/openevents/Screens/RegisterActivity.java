@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText first_name, last_name, password, email, image;
+    EditText name, last_name, password, email, image;
     Button create_account;
 
     public static Intent newIntent(Context packageContext) {
@@ -36,34 +36,35 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        first_name = (EditText) findViewById(R.id.editText3);
+        name = (EditText) findViewById(R.id.editText3);
+        last_name = (EditText) findViewById(R.id.editText6);
         password = (EditText) findViewById(R.id.editText5);
         email = (EditText) findViewById(R.id.editText4);
-        last_name = (EditText) findViewById(R.id.editText6);
         image = (EditText) findViewById(R.id.editText8);
         create_account = (Button) findViewById(R.id.create_account);
 
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || first_name.getText().toString().isEmpty() || last_name.getText().toString().isEmpty() || image.getText().toString().isEmpty()) {
+                if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || name.getText().toString().isEmpty() || last_name.getText().toString().isEmpty() || image.getText().toString().isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                create_account(email.getText().toString(), password.getText().toString(), first_name.getText().toString(), last_name.getText().toString(), image.getText().toString());
+                create_account(email.getText().toString(), name.getText().toString(), last_name.getText().toString(), password.getText().toString(), image.getText().toString());
             }
         });
     }
 
-    private void create_account(String first_name, String last_name, String email, String password, String image) {
+    private void create_account(String email, String name, String last_name, String password, String image) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://172.16.205.68/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
-        User user = new User(first_name, last_name, email, password, image);
-        Call<User> call = service.createPost(user);
+        //User user = new User(name, last_name, email, password, image);
+        Call<User> call = service.createPost(name, last_name, email, password, image);
 
         call.enqueue(new Callback<User>() {
             @Override
