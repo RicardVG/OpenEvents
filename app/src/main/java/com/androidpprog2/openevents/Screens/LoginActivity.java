@@ -14,8 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.User;
+//import com.androidpprog2.openevents.UserAToken;
 import com.androidpprog2.openevents.api.OpenEventsAPI;
+import com.androidpprog2.openevents.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         passwordRegister = getIntent().getStringExtra("password");
 
 
-        emailLogin = (EditText)findViewById(R.id.editText);
-        passwordLogin = (EditText)findViewById(R.id.editText2);
-        sign_in=(Button)findViewById(R.id.sign_in);
-        sign_up=(TextView)findViewById(R.id.SignUp);
+        emailLogin = (EditText) findViewById(R.id.editText);
+        passwordLogin = (EditText) findViewById(R.id.editText2);
+        sign_in = (Button) findViewById(R.id.sign_in);
+        sign_up = (TextView) findViewById(R.id.SignUp);
 
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-       // Button sign_in = this.findViewById(R.id.sign_in);
+        // Button sign_in = this.findViewById(R.id.sign_in);
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,34 +69,39 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                sign_in(emailLogin.getText().toString(), passwordLogin.getText().toString());
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://172.16.205.68/api/v2/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
 
-                OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+            }
+        });
+    }
 
-                service.getTodos().enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        Log.d("MAIN","TODOOK");
-                        SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sh.edit();
-                        int nuevoAccessToken = 0;
-                        editor.putInt("accessToken", nuevoAccessToken);
-                        editor.commit();
-                        Intent intent = EventsActivity.newIntent(LoginActivity.this);
-                        startActivity(intent);
-                    }
+    private void sign_in(String email, String password){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://172.16.205.68/api/v2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+        LoginRequest loginRequest = new LoginRequest(email,password);
+        Call<LoginRequest> callLoginRequest = service.loginUser(loginRequest);
 
-                    }
-                });
+        callLoginRequest.enqueue(new Callback<LoginRequest>() {
 
+            @Override
+            public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
+                Log.d("MAIN","TODOOK");
+                SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sh.edit();
+                editor.putString("accessToken",response.body().getAccessToken()).apply();
+                Intent intent = EventsActivity.newIntent(LoginActivity.this);
+                startActivity(intent);
+                finish();
+
+            }
+            @Override
+            public void onFailure(Call<LoginRequest> callUserToken, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
             }
         });
     }

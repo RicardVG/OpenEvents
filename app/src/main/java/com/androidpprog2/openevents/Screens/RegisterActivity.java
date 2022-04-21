@@ -63,8 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
-        //User user = new User(name, last_name, email, password, image);
-        Call<User> call = service.createPost(name, last_name, email, password, image);
+        User user = new User(name, last_name, email, password, image);
+        Call<User> call = service.registerUser(user);
 
         call.enqueue(new Callback<User>() {
             @Override
