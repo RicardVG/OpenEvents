@@ -91,17 +91,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
                 Log.d("MAIN","TODOOK");
-                SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sh.edit();
-                editor.putString("accessToken",response.body().getAccessToken()).apply();
-                Intent intent = EventsActivity.newIntent(LoginActivity.this);
-                startActivity(intent);
-                finish();
+                if (response.code() == 200){
+                    SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sh.edit();
+                    editor.putString("accessToken",response.body().getAccessToken()).apply();
+                    Intent intent = EventsActivity.newIntent(LoginActivity.this);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
+
+                }
+
 
             }
             @Override
             public void onFailure(Call<LoginRequest> callUserToken, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"NO INTERNET",Toast.LENGTH_SHORT).show();
             }
         });
     }
