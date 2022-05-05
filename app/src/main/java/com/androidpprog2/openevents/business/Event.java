@@ -32,4 +32,8 @@ public class Event {
         this.endDate = endDate;
         this.numParticipants = numParticipants;
     }
+
+    public int getId() {
+        return id;
+    }
 }
