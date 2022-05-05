@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.persistance;
 
+import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.business.LoginRequest;
 
