@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.Screens;
+package com.androidpprog2.openevents.presentation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.User;
-import com.androidpprog2.openevents.api.OpenEventsAPI;
+import com.androidpprog2.openevents.business.User;
+import com.androidpprog2.openevents.persistance.APIClient;
+import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,12 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void create_account(String email, String name, String last_name, String password, String image) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.205.68/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-
+        Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         User user = new User(name, last_name, email, password, image);
         Call<User> call = service.registerUser(user);

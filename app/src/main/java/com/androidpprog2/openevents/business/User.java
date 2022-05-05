@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents;
+package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
 

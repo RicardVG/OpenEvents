@@ -10,15 +10,15 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/openeventslogo"/>
+        android:src="@drawable/open_events_logo" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo_id"
         android:layout_centerHorizontal="true"
-        android:text="Splash Screen"
-        android:textSize="30dp"
-        android:textColor="@color/black"/>
+        android:text="WELCOME TO OUR APPLICATION"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
 </RelativeLayout>

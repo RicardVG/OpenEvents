@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_margin="12dp"
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Events"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="35dp" />
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@color/white"
+        android:background="@drawable/tool_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="0dp"
+        app:elevation="0dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

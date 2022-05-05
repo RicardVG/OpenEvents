@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.Screens;
+package com.androidpprog2.openevents.presentation;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.Screens;
+package com.androidpprog2.openevents.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 import com.androidpprog2.openevents.R;
 //import com.androidpprog2.openevents.UserAToken;
-import com.androidpprog2.openevents.api.OpenEventsAPI;
-import com.androidpprog2.openevents.LoginRequest;
+import com.androidpprog2.openevents.persistance.APIClient;
+import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.androidpprog2.openevents.business.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,11 +78,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sign_in(String email, String password){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.205.68/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
+        Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         LoginRequest loginRequest = new LoginRequest(email,password);
         Call<LoginRequest> callLoginRequest = service.loginUser(loginRequest);

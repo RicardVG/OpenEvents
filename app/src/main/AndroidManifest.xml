@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenEvents">
-        <activity android:name=".Screens.SplashActivity"
+        <activity android:name=".presentation.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Screens.LoginActivity">
+            android:name=".presentation.LoginActivity">
         </activity>
-        <activity android:name=".Screens.RegisterActivity">
+        <activity android:name=".presentation.RegisterActivity">
         </activity>
-        <activity android:name=".Screens.EventsActivity">
+        <activity android:name=".presentation.EventsActivity">
         </activity>
     </application>
 

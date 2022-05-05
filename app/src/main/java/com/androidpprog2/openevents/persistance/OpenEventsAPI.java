@@ -1,7 +1,7 @@
-package com.androidpprog2.openevents.api;
+package com.androidpprog2.openevents.persistance;
 
-import com.androidpprog2.openevents.User;
-import com.androidpprog2.openevents.LoginRequest;
+import com.androidpprog2.openevents.business.User;
+import com.androidpprog2.openevents.business.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
