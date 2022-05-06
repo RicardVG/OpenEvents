@@ -33,6 +33,54 @@ public class Event {
         this.numParticipants = numParticipants;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getComentary() {
+        return comentary;
+    }
+
+    public String getPuntuation() {
+        return puntuation;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public int getNumParticipants() {
+        return numParticipants;
+    }
+
     public int getId() {
         return id;
     }

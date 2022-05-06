@@ -4,13 +4,16 @@ import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.business.LoginRequest;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
@@ -27,6 +30,12 @@ public interface OpenEventsAPI {
             @Body User user
     );
 
+    @GET("events")
+    Call<ArrayList<Event>> getEvents();
+
+    //@Header("authorization") String accesstoken
+
+    @Multipart
     @POST("events")
     Call<Event> createEvent(@Header("authorization") String token,
                             @Part("name") RequestBody name,
