@@ -7,6 +7,8 @@
         <entry key="..\:/Users/marc_/Documents/GitHub/Practica1/OpenEvents/OpenEvents/app/src/main/res/layout/login.xml" value="0.1621376811594203" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/category_lados.xml" value="0.159" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/event_def.xml" value="0.159" />
+        <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/icon_home.xml" value="0.159" />
+        <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/icon_profile.xml" value="0.159" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/share.xml" value="0.159" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/drawable/tool_nav.xml" value="0.159" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/layout/activity_main.xml" value="0.1621376811594203" />
@@ -17,6 +19,7 @@
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/layout/register.xml" value="0.25" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/layout/singleevent.xml" value="0.15" />
         <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/layout/splash.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/ricar/Documents/CURS 2021-2022/Android/OpenEvents/app/src/main/res/menu/my_navigation_items.xml" value="0.15537059056678557" />
       </map>
     </option>
   </component>
