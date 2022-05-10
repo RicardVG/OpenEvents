@@ -1,20 +1,34 @@
 package com.androidpprog2.openevents.business;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Event {
     private int id;
+
     private String name;
+    @SerializedName("location")
     private String location;
+    @SerializedName("description")
     private String description;
+    @SerializedName("image")
     private String image;
+    @SerializedName("type")
     private String type;
+    @SerializedName("comentary")
     private String comentary;
+    @SerializedName("puntuation")
     private String puntuation;
+    @SerializedName("owner_id")
     private int ownerId;
+    @SerializedName("date")
     private Date creationDate;
+    @SerializedName("start_date")
     private Date startDate;
+    @SerializedName("end_date")
     private Date endDate;
+    @SerializedName("num_participants")
     private int numParticipants;
 
     public Event(int id, String name, String location, String description, String image, String type, String comentary, String puntuation, int ownerId, Date creationDate, Date startDate, Date endDate, int numParticipants) {
