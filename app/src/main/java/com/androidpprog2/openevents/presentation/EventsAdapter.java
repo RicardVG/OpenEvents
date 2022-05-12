@@ -70,6 +70,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.date = (TextView) itemView.findViewById(R.id.eventDateList);
             this.category = (TextView) itemView.findViewById(R.id.eventCategoryList);
             this.eventCard = (MaterialCardView) itemView.findViewById(R.id.event_card);
+
+
+
         }
 
         public void bind(Event _event, Context _context) {
@@ -108,6 +111,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
 
           */
         }
+
 
 
     }

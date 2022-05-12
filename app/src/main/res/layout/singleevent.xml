@@ -52,6 +52,7 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                android:onClick="deleteEvent"
                 app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
 
             <LinearLayout
