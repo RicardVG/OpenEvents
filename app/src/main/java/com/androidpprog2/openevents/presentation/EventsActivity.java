@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,10 +44,14 @@ public class EventsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.eventsRecyclerView);
 
 
-        getEvents();
 
+        getEvents();
+        createEvent();
     }
 
+    public void createEvent(){
+        CreateEventFragment createEventFragment = new CreateEventFragment();
+    }
     public void getEvents() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
