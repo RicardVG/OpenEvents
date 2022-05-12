@@ -52,6 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/createEvent_name"
                 tools:layout_editor_absoluteX="50dp">
 
+
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/Style.Eventme.TextInput"
                     android:layout_width="match_parent"
