@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.code() == 200){
                     SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
-                    editor.putString("accessToken",response.body().getAccessToken()).apply();
+                    editor.putString("accessToken","Bearer" + response.body().getAccessToken()).apply();
                     Intent intent = EventsActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finish();

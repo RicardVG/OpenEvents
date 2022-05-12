@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.persistance;
 
+import android.content.SharedPreferences;
+
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.business.LoginRequest;
@@ -32,7 +34,7 @@ public interface OpenEventsAPI {
     );
 
     @GET("events")
-    Call<ArrayList<Event>> getEvents();
+    Call<ArrayList<Event>> getEvents(@Header("Authorization") String accessToken);
 
     @Multipart
     @POST("events")

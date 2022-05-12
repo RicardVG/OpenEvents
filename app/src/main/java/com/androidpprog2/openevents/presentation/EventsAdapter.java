@@ -63,6 +63,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
         private MaterialCardView eventCard;
         public EventsListViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.findViewById(R.id.deleteEvent);
             this.event_image = (ImageView) itemView.findViewById(R.id.eventImageList);
             this.name = (TextView) itemView.findViewById(R.id.eventTitleList);
             this.location = (TextView) itemView.findViewById(R.id.eventLocationList);
@@ -94,7 +95,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.eventCard.setOnClickListener(this);
             this.name.setText(this.event.getName());
             this.location.setText(this.event.getLocation());
-            this.date.setText((CharSequence) this.event.getStartDate());
             this.date.setText((CharSequence) this.event.getEndDate());
             this.category.setText(this.event.getType());
         }

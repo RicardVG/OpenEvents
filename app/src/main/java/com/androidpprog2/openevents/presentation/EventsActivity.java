@@ -2,10 +2,12 @@ package com.androidpprog2.openevents.presentation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
@@ -48,7 +50,19 @@ public class EventsActivity extends AppCompatActivity {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         //HEM DE COMPROBAR EL BEARER TOKEN
-        Call<ArrayList<Event>> call = service.getEvents();
+
+        SharedPreferences sh;
+        sh = getSharedPreferences("sh",MODE_PRIVATE);
+        String accessToken = sh.getString("accessToken","");
+
+        adapter = new EventsAdapter(new ArrayList<>(), getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+
+
+        Call<ArrayList<Event>> call = service.getEvents(accessToken);
         call.enqueue(new Callback<ArrayList<Event>>() {
 
             @Override
