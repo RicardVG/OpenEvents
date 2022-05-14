@@ -5,6 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/titleCreateEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="17dp"
+            android:text="Create Event"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+    </FrameLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_margin="12dp"
         android:id="@+id/navigation_view"
@@ -34,7 +50,7 @@
         app:layout_constraintVertical_bias="0.055" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/titleMyEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
@@ -50,7 +66,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
-        android:onClick="createEvent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_box_24" />

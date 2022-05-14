@@ -39,7 +39,7 @@ public interface OpenEventsAPI {
 
     @Multipart
     @POST("events")
-    Call<Event> createEvent(@Header("authorization") String token,
+    Call<Event> createEvent(@Header("Authorization") String accessToken,
                             @Part("name") RequestBody name,
                             @Part MultipartBody.Part image,
                             @Part("location") RequestBody location,

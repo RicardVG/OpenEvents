@@ -29,4 +29,25 @@
     <string name="createEvent_category">Category</string>
     <string name="createEvent_capacity">Capacity</string>
     <string name="createEvent_create_btn">Create</string>
+    <string name="createEvent_name_error">Missing name field</string>
+    <string name="createEvent_location_error">Missing location field</string>
+    <string name="createEvent_description_error">Missing description field</string>
+    <string name="createEvent_capacity_error">Missing capacity field</string>
+    <string name="createEvent_capacity_error_syntax">Field must be a number</string>
+    <string name="createEvent_categroy_error">Missing category field</string>
+    <string name="createEvent_startDate_error">Missing StartDate field</string>
+    <string name="createEvent_endDate_error">Missing EndDate field</string>
+    <string name="createEvent_startTime_error">Missing StartTime field</string>
+    <string name="createEvent_endTime_error">Missing EndTime field</string>
+    <string name="createEvent_correct">Event created Done</string>
+    <string name="category_others">Others</string>
+    <string name="category_science">Science</string>
+    <string name="category_games">Games</string>
+    <string name="category_cultural">Cultural</string>
+    <string name="category_art">Art</string>
+    <string name="category_education">Education</string>
+    <string name="category_politics">Politics</string>
+    <string name="category_technology">Technology</string>
+    <string name="category_music">Music</string>
+    <string name="category_sport">Sport</string>
 </resources>
