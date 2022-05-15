@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class EventsActivity extends AppCompatActivity {
     private ImageView addEvent;
     private TextView titleMyEvents;
     private TextView titleCreateEvent;
+    private SharedPreferences sh;
 
     public EventsActivity() {
 
@@ -65,6 +67,7 @@ public class EventsActivity extends AppCompatActivity {
         titleMyEvents = findViewById(R.id.titleMyEvents);
         titleCreateEvent = findViewById(R.id.titleCreateEvent);
         getEvents();
+        sh = getSharedPreferences("sh",MODE_PRIVATE);
 
 
         addEvent = findViewById(R.id.addEvent);
@@ -102,7 +105,6 @@ public class EventsActivity extends AppCompatActivity {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
-        SharedPreferences sh;
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
 
@@ -117,7 +119,7 @@ public class EventsActivity extends AppCompatActivity {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image);
         MultipartBody.Part requestImage = MultipartBody.Part.createFormData("image", image, requestFile);
         Call<Event> call = service.createEvent(
-                "Bearer " + token,
+                accessToken,
                 RequestBody.create(MultipartBody.FORM, name),
                 requestImage,
                 RequestBody.create(MultipartBody.FORM, location),
@@ -134,6 +136,8 @@ public class EventsActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.code() == 201) {
                         createEventFragment.refreshTextFields();
+                        Intent intent = EventsActivity.newIntent(EventsActivity.this);
+                        startActivity(intent);
                     }
                     else if (response.code() == 400){
                         Toast.makeText(getApplicationContext(),"Data is incorrect! Please enter another information", Toast.LENGTH_LONG).show();
@@ -150,11 +154,7 @@ public class EventsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-                if(t instanceof SocketTimeoutException){
-                    createEventFragment.refreshTextFields();
-                }else {
-                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
                 createEventFragment.loading(false);
             }
         });
@@ -169,7 +169,6 @@ public class EventsActivity extends AppCompatActivity {
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         //HEM DE COMPROBAR EL BEARER TOKEN
 
-        SharedPreferences sh;
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
 

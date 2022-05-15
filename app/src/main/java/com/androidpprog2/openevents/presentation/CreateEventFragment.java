@@ -27,7 +27,6 @@ public class CreateEventFragment extends Fragment implements Callback {
 
     private String DEFAULT_IMG;
     private MaterialButton createBtn;
-    private ProgressBar progressBar;
     private TextInputLayout nameInput;
     private TextInputLayout locationInput;
     private TextInputLayout descriptionInput;
@@ -39,7 +38,6 @@ public class CreateEventFragment extends Fragment implements Callback {
     private TextInputLayout categoryInput;
 
     private String[] categories;
-    private EventsActivity eventsActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +63,6 @@ public class CreateEventFragment extends Fragment implements Callback {
         capacityInput = view.findViewById(R.id.createEvent_capacity);
         categoryInput = view.findViewById(R.id.createEvent_category);
 
-        progressBar = view.findViewById(R.id.progress_bar);
 
         startDateInput.getEditText().setInputType(InputType.TYPE_NULL);
         endDateInput.getEditText().setInputType(InputType.TYPE_NULL);
@@ -90,6 +87,7 @@ public class CreateEventFragment extends Fragment implements Callback {
             loading(true);
 
             setDefaultImage(category);
+            EventsActivity eventsActivity = new EventsActivity();
             eventsActivity.insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
 
         }
@@ -110,10 +108,8 @@ public class CreateEventFragment extends Fragment implements Callback {
         capacityInput.setEnabled(enable);
 
         if (state) {
-            progressBar.setVisibility(View.VISIBLE);
             createBtn.setVisibility(View.GONE);
         } else {
-            progressBar.setVisibility(View.GONE);
             createBtn.setVisibility(View.VISIBLE);
         }
     }
