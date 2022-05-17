@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.InfoEventActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/event_detail_header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/event_name"
+                        style="@style/Style.Eventme.Text.Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="The Rolling Stones Experience" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/event_type"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/category_type"
+                            android:paddingLeft="25dp"
+                            android:paddingRight="25dp"
+                            android:layout_marginRight="15dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:text="Tech"
+                            android:textSize="15sp"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        app:cardBackgroundColor="@color/background_color"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:id="@+id/event_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_default" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/event_detail_date_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_header_layout_divider"
+                    tools:ignore="Orientation">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="18dp"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_baseline_access_time_filled_24"
+                        app:tint="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event_start_date"
+                            style="@style/Style.Eventme.Text.font_size_low"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Starts May 25, 2021 · 22:00 pm" />
+
+                        <TextView
+                            android:id="@+id/event_end_date"
+                            style="@style/Style.Eventme.Text.font_size_low"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Ends May 25, 2021 · 02:00 am" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/event_detail_location_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_layout_divider"
+                    tools:ignore="Orientation">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_baseline_location_on_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/event_location"
+                        style="@style/Style.Eventme.Text.font_size_low"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Ends May 25, 2021 · 02:00 am" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/event_detail_description_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_location_divider"
+                    tools:ignore="Orientation">
+
+                    <TextView
+                        android:id="@+id/event_description"
+                        style="@style/Style.Eventme.Text.font_size_low"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra nec eros id laoreet. In vitae magna sapien. Nunc placerat lectus a orci iaculis, sed consectetur purus fringilla. Phasellus varius posuere ex. Suspendisse consequat vestibulum quam, in condimentum massa eleifend in. " />
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/event_detail_date_location_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_location_layout" />
+
+                <View
+                    android:id="@+id/event_detail_date_layout_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_layout" />
+
+                <View
+                    android:id="@+id/event_detail_description_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_description_layout" />
+
+                <View
+                    android:id="@+id/event_detail_header_layout_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_header_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+</LinearLayout>
+

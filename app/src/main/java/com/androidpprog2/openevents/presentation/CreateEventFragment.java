@@ -87,8 +87,11 @@ public class CreateEventFragment extends Fragment implements Callback {
             loading(true);
 
             setDefaultImage(category);
-            EventsActivity eventsActivity = new EventsActivity();
-            eventsActivity.insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
+
+            if (getActivity() instanceof EventsActivity){
+                ((EventsActivity) getActivity()).insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
+
+            }
 
         }
     }

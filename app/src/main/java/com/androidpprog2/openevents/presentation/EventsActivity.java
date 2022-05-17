@@ -93,7 +93,7 @@ public class EventsActivity extends AppCompatActivity {
     private void moveToFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
-        System.out.println("HOLA");
+
     }
 
 
@@ -130,7 +130,7 @@ public class EventsActivity extends AppCompatActivity {
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
-                createEventFragment.loading(false);
+              //  createEventFragment.loading(false);
                 if (response.isSuccessful()) {
                     if (response.code() == 201) {
                         createEventFragment.refreshTextFields();
@@ -210,6 +210,7 @@ public class EventsActivity extends AppCompatActivity {
 
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
+
 
 
         Call<Void> call = service.deleteEvent(accessToken,1);
