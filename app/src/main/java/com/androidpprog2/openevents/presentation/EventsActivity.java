@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,9 +20,7 @@ import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -168,7 +165,6 @@ public class EventsActivity extends AppCompatActivity {
     public void getEvents() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
-        //HEM DE COMPROBAR EL BEARER TOKEN
 
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
@@ -209,7 +205,14 @@ public class EventsActivity extends AppCompatActivity {
     }
 
     private void deleteEvent(){
-        Call<Void> call = OpenEventsAPI.deleteEvent(1);
+        Retrofit retrofit = APIClient.getRetrofitInstance();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+
+        sh = getSharedPreferences("sh",MODE_PRIVATE);
+        String accessToken = sh.getString("accessToken","Bearer");
+
+
+        Call<Void> call = service.deleteEvent(accessToken,1);
 
         call.enqueue(new Callback<Void>() {
             @Override
@@ -222,5 +225,7 @@ public class EventsActivity extends AppCompatActivity {
                 System.out.println("Not Deleted");
             }
         });
+
+
     }
 }
