@@ -99,6 +99,7 @@ public class EventsActivity extends AppCompatActivity {
         System.out.println("HOLA");
     }
 
+
     @SuppressLint("SimpleDateFormat")
     public void insertEvent(String name, String image, String location, String description, String eventStart_date,
                             String eventEnd_date, String type, String n_participators) {
@@ -157,11 +158,11 @@ public class EventsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
                 createEventFragment.loading(false);
             }
+
         });
 
+
     }
-
-
 
 
     public void getEvents() {
@@ -201,6 +202,25 @@ public class EventsActivity extends AppCompatActivity {
 
         }
     });
+    }
+    public void delete_event(){
+        deleteEvent();
 
+    }
+
+    private void deleteEvent(){
+        Call<Void> call = OpenEventsAPI.deleteEvent(1);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println("Deleted Event");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Not Deleted");
+            }
+        });
     }
 }

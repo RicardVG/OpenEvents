@@ -55,6 +55,6 @@ public interface OpenEventsAPI {
 
 
     @DELETE("events/{id}")
-    Call<String> delete_Event(@Header("authorization") String token, @Path("id") int id);
+    Call<Void> deleteEvent(@Header("authorization") String token, @Path("id") int id);
 
 }
