@@ -37,21 +37,13 @@ public interface OpenEventsAPI {
     @GET("events")
     Call<ArrayList<Event>> getEvents(@Header("Authorization") String accessToken);
 
-    @Multipart
+
     @POST("events")
     Call<Event> createEvent(@Header("Authorization") String accessToken,
-                            @Part("name") RequestBody name,
-                            @Part MultipartBody.Part image,
-                            @Part("location") RequestBody location,
-                            @Part("description") RequestBody description,
-                            @Part("eventStart_date") Date eventStart_date,
-                            @Part("eventEnd_date") Date eventEnd_date,
-                            @Part("n_participators") RequestBody n_participators,
-                            @Part("type") RequestBody type);
+                            @Body Event event);
 
-    //@Header("authorization") String accesstoken
     @GET("events/{id}")
-    Call<ArrayList<Event>> getEvent(@Path("id") int id);
+    Call<ArrayList<Event>> getEvent(@Header("Authorization") String accessToken, @Path("id") int id);
 
 
     @DELETE("events/{id}")

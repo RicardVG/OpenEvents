@@ -158,11 +158,42 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/event_detail_participants_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_location_divider"
+                    tools:ignore="Orientation">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_baseline_group_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/event_participants"
+                        style="@style/Style.Eventme.Text.font_size_low"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="1000 participants" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
                     android:id="@+id/event_detail_description_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
-                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_location_divider"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_date_participants_divider"
                     tools:ignore="Orientation">
 
                     <TextView
@@ -189,6 +220,16 @@
                     android:layout_height="1dp"
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@+id/event_detail_date_layout" />
+
+
+                <View
+                    android:id="@+id/event_detail_date_participants_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/event_detail_participants_layout" />
+
+
 
                 <View
                     android:id="@+id/event_detail_description_divider"

@@ -81,10 +81,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.context = _context;
             String url = "";
             if (this.event.getImage() != null) {
-                if (this.event.getImage().startsWith("http")) {
+                if (this.event.getImage().startsWith("https")) {
                     url = this.event.getImage();
                 } else {
-                    url = "http://172.16.205.68/img/" + this.event.getImage();
+                    url = "https://172.16.205.68/img/" + this.event.getImage();
                 }
             }
 
@@ -106,12 +106,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
 
         @Override
         public void onClick(View v) {
-         /*   Intent intent = new Intent(context, EventDetailActivity.class);
+            Intent intent = new Intent(context, InfoEventActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(EventsCarrouselAdapter.EVENT_ID, this.event.getId());
+            intent.putExtra("id", this.event.getId());
             this.context.startActivity(intent);
 
-          */
+
         }
 
 
