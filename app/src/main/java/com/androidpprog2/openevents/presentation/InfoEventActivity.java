@@ -2,6 +2,8 @@ package com.androidpprog2.openevents.presentation;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,8 @@ public class InfoEventActivity extends AppCompatActivity {
     private TextView descriptionEvent;
     private ImageView imageEvent;
     private SharedPreferences sh;
+    private Button delete_event_button;
+
 
     private Event event;
 
@@ -42,7 +46,7 @@ public class InfoEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_event);
 
-
+        delete_event_button = findViewById(R.id.delete_event_button);
         eventName = findViewById(R.id.event_name);
         typeEvent = findViewById(R.id.event_type);
         imageEvent = findViewById(R.id.event_image);
@@ -53,6 +57,8 @@ public class InfoEventActivity extends AppCompatActivity {
         participantsEvent = findViewById(R.id.event_participants);
 
         findEvent();
+
+
     }
 
 
@@ -87,6 +93,13 @@ public class InfoEventActivity extends AppCompatActivity {
 
             }
         });
+
+        delete_event_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<Void> call = service.deleteEvent(accessToken, id);
+            }
+        });
     }
 
     private void printEvent(Event event) {
@@ -103,7 +116,12 @@ public class InfoEventActivity extends AppCompatActivity {
        //     int id_image = Integer.parseInt(event.getImage());
        //     imageEvent.setImageResource(id_image);
        // }
+
+
     }
+
+
+
 }
 
 

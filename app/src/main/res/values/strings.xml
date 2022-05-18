@@ -50,4 +50,5 @@
     <string name="category_technology">Technology</string>
     <string name="category_music">Music</string>
     <string name="category_sport">Sport</string>
+    <string name="button_delete_event">Delete Event</string>
 </resources>
