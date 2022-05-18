@@ -57,8 +57,6 @@ public class InfoEventActivity extends AppCompatActivity {
         participantsEvent = findViewById(R.id.event_participants);
 
         findEvent();
-
-
     }
 
 
@@ -98,6 +96,7 @@ public class InfoEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Call<Void> call = service.deleteEvent(accessToken, id);
+
             }
         });
     }

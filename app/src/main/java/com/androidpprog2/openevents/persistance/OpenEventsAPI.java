@@ -49,4 +49,6 @@ public interface OpenEventsAPI {
     @DELETE("events/{id}")
     Call<Void> deleteEvent(@Header("authorization") String token, @Path("id") int id);
 
+    @GET("events/{id}/assistances")//numero dassistents dins de un event
+    Call<ArrayList<User>> getAssistances(@Header("authorization") String token, @Path("id") int id);
 }
