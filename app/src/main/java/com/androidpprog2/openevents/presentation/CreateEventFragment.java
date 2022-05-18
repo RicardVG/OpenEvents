@@ -6,10 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -18,15 +14,12 @@ import com.androidpprog2.openevents.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.File;
-import java.util.Calendar;
-
 import javax.security.auth.callback.Callback;
 
 public class CreateEventFragment extends Fragment implements Callback {
 
-    private String DEFAULT_IMG;
-    private MaterialButton createBtn;
+    private String DEFAULT_IMG = "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YXJ0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80";
+    private MaterialButton createButton;
     private TextInputLayout nameInput;
     private TextInputLayout locationInput;
     private TextInputLayout descriptionInput;
@@ -37,19 +30,13 @@ public class CreateEventFragment extends Fragment implements Callback {
     private TextInputLayout capacityInput;
     private TextInputLayout categoryInput;
 
-    private String[] categories;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         View view =  inflater.inflate(R.layout.fragment_create_event, container, false);
-        createBtn = (MaterialButton) view.findViewById(R.id.create_btn);
-
-        categories = new String[] {getString(R.string.category_art), getString(R.string.category_cultural),
-                getString(R.string.category_education), getString(R.string.category_games), getString(R.string.category_music),
-                getString(R.string.category_politics), getString(R.string.category_science), getString(R.string.category_sport),
-                getString(R.string.category_technology), getString(R.string.category_others)};
+        createButton = view.findViewById(R.id.create_button);
 
 
 
@@ -69,7 +56,7 @@ public class CreateEventFragment extends Fragment implements Callback {
 
         //validationListeners();
 
-        createBtn.setOnClickListener(v -> { create_Event(); });
+        createButton.setOnClickListener(v -> { create_Event(); });
 
         return view;
     }
@@ -86,8 +73,6 @@ public class CreateEventFragment extends Fragment implements Callback {
 
             loading(true);
 
-            setDefaultImage(category);
-
             if (getActivity() instanceof EventsActivity){
                 ((EventsActivity) getActivity()).insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
 
@@ -99,7 +84,7 @@ public class CreateEventFragment extends Fragment implements Callback {
     public void loading(boolean state) {
         boolean enable = !state;
 
-        createBtn.setEnabled(enable);
+        createButton.setEnabled(enable);
         nameInput.setEnabled(enable);
         locationInput.setEnabled(enable);
         descriptionInput.setEnabled(enable);
@@ -110,11 +95,6 @@ public class CreateEventFragment extends Fragment implements Callback {
         categoryInput.setEnabled(enable);
         capacityInput.setEnabled(enable);
 
-        if (state) {
-            createBtn.setVisibility(View.GONE);
-        } else {
-            createBtn.setVisibility(View.VISIBLE);
-        }
     }
 
 
@@ -220,25 +200,6 @@ public class CreateEventFragment extends Fragment implements Callback {
         return error;
     }
 
-
-    public void setDefaultImage(String category){
-        String[] urls = new String[] {"https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YXJ0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
-                "https://nucleovisual.com/wp-content/uploads/2019/12/Cultura-material-e-inmaterial-01.jpg",
-                "https://www.unir.net/wp-content/uploads/2019/10/iStock-1000887536.jpg",
-                "https://i.pcmag.com/imagery/roundups/04nBPwuUCcHJKEjeohmzNEA-5.fit_lim.size_1050x.jpg",
-                "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/YT_Music.jpg",
-                "https://www.voicesofyouth.org/sites/voy/files/styles/blog_teaser/public/images/2019-01/politics3.jpg?h=ae1281eb&itok=7pVud1WX",
-                "https://www.rd-alliance.org/sites/default/files/Banner%20DNA%20ORION%20MOOC.jpg",
-                "https://www.okomeds.com/wp-content/uploads/2016/02/p18lq7ediepl816p6s04171vo23.jpg",
-                "https://i.hurimg.com/i/hdn/75/0x0/5da425cc0f25441cf4279f1d.jpg",
-                "https://sloanreview.mit.edu/wp-content/uploads/2017/04/DL-Mukherjee-Digital-Leadership-Neutrality-Neutral-Culture-1200.jpg"};
-
-        for (int i = 0; i < categories.length; i++) {
-            if(category.equals(categories[i])){
-                DEFAULT_IMG = (urls[i]);
-            }
-        }
-    }
 
     void refreshTextFields() {
         nameInput.getEditText().getText().clear();

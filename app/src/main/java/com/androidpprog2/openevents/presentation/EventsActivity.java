@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 
@@ -83,6 +84,7 @@ public class EventsActivity extends AppCompatActivity {
 
 
 
+
     }
 
     public void createEvent(){
@@ -99,13 +101,13 @@ public class EventsActivity extends AppCompatActivity {
 
     @SuppressLint("SimpleDateFormat")
     public void insertEvent(String name, String image, String location, String description, String eventStart_date,
-                            String eventEnd_date, String type, String n_participators) {
+                            String eventEnd_date, String type, String capacity) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
-
+/*
         Date startDate = null;
         Date endDate = null;
         try {
@@ -114,25 +116,28 @@ public class EventsActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image);
-        MultipartBody.Part requestImage = MultipartBody.Part.createFormData("image", image, requestFile);
+
+
+ */
+        int n_participators;
+        n_participators = Integer.parseInt(capacity);
+        int id = 0;
+        String comentary = "hola";
+        String puntuation = "1";
+        int ownerId = 0;
+        String creationDate = "17/06/2022";
+        Event event = new Event(name,image,location,description,eventStart_date,eventEnd_date,n_participators,type);
+
         Call<Event> call = service.createEvent(
-                accessToken,
-                RequestBody.create(MultipartBody.FORM, name),
-                requestImage,
-                RequestBody.create(MultipartBody.FORM, location),
-                RequestBody.create(MultipartBody.FORM, description),
-                startDate,
-                endDate,
-                RequestBody.create(MultipartBody.FORM, n_participators),
-                RequestBody.create(MultipartBody.FORM, type));
+                accessToken,event);
 
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
-              //  createEventFragment.loading(false);
+//                createEventFragment.loading(false);
                 if (response.isSuccessful()) {
                     if (response.code() == 201) {
+                        System.out.println("HOLA?????????????????????????");
                         createEventFragment.refreshTextFields();
                         Intent intent = EventsActivity.newIntent(EventsActivity.this);
                         startActivity(intent);
@@ -153,7 +158,7 @@ public class EventsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
-                createEventFragment.loading(false);
+            //    createEventFragment.loading(false);
             }
 
         });

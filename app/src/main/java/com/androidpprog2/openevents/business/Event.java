@@ -23,15 +23,15 @@ public class Event {
     @SerializedName("owner_id")
     private int ownerId;
     @SerializedName("date")
-    private Date creationDate;
+    private String creationDate;
     @SerializedName("start_date")
-    private Date startDate;
+    private String startDate;
     @SerializedName("end_date")
-    private Date endDate;
+    private String endDate;
     @SerializedName("num_participants")
     private int numParticipants;
 
-    public Event(int id, String name, String location, String description, String image, String type, String comentary, String puntuation, int ownerId, Date creationDate, Date startDate, Date endDate, int numParticipants) {
+    public Event(int id, String name, String location, String description, String image, String type, String comentary, String puntuation, int ownerId, String creationDate, String startDate, String endDate, int numParticipants) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -45,6 +45,17 @@ public class Event {
         this.startDate = startDate;
         this.endDate = endDate;
         this.numParticipants = numParticipants;
+    }
+
+    public Event(String name, String image, String location, String description, String eventStart_date, String eventEnd_date, int n_participators, String type) {
+        this.name = name;
+        this.image = image;
+        this.location = location;
+        this.description = description;
+        this.startDate = eventStart_date;
+        this.endDate = eventEnd_date;
+        this.numParticipants= n_participators;
+        this.type = type;
     }
 
     public String getName() {
@@ -79,15 +90,15 @@ public class Event {
         return ownerId;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
