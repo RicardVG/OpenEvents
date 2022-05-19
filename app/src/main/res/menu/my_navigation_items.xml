@@ -4,8 +4,7 @@
         android:icon="@drawable/icon_home" />
     <item android:id="@+id/profile"
         android:title="@string/Profile"
-        android:icon="@drawable/icon_profile"
-        android:onClick=""/>
+        android:icon="@drawable/icon_profile" />
     <item android:id="@+id/users"
         android:title="@string/Users"
         android:icon="@drawable/icon_users" />
