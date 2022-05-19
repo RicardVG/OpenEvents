@@ -265,13 +265,15 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
 
         switch (item.getItemId()) {
             case R.id.home:
+                recyclerView.setVisibility(View.VISIBLE);
                 fragment = new HomeFragment();
 
                 break;
 
             case R.id.profile:
+                recyclerView.setVisibility(View.GONE);
                 fragment = new UserProfileFragment();
-           //     recyclerView.setVisibility(View.GONE);
+
                 break;
         }
 
