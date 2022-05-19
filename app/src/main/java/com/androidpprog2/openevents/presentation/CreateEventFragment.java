@@ -75,7 +75,7 @@ public class CreateEventFragment extends Fragment implements Callback {
             String category = categoryInput.getEditText().getText().toString();
             String capacity = capacityInput.getEditText().getText().toString();
 
-            loading(true);
+          //  loading(true);
 
             if (getActivity() instanceof EventsActivity){
                 ((EventsActivity) getActivity()).insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
