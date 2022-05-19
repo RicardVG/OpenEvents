@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.User;
@@ -47,7 +49,7 @@ public class UserProfileFragment extends Fragment {
     public UserProfileFragment() {
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -62,14 +64,18 @@ public class UserProfileFragment extends Fragment {
         percentage_commenters_below = view.findViewById(R.id.percentage_comments_below);
         editProfileBtn = view.findViewById(R.id.editProfile);
 
-
-        editProfileBtn.setOnClickListener(v -> {
-            startUpdateActivity();
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startUpdateActivity();
+            }
         });
+
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         id = preferences.getInt("id", getId());
+
 
         if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
@@ -98,9 +104,9 @@ public class UserProfileFragment extends Fragment {
  */
 
      private void startUpdateActivity() {
-        Intent intent = new Intent(getContext(), UserProfileEditActivity.class);
-        intent.putExtra("id_user",id);
-
+         Intent intent = UserProfileEditActivity.newIntent(getContext());
+         intent.putExtra("id_user",id);
+         startActivity(intent);
 
     }
 

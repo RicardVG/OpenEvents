@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,14 +38,22 @@ public class UserProfileEditActivity extends AppCompatActivity {
     private TextInputLayout user_password_input;
     private User user;
 
+    @NonNull
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, UserProfileEditActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        int id = intent.getIntExtra("id_user", 0);
+        return intent;
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user_profile);
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("id_user", 0);
 
+        Intent intent = new Intent();
+        int id = intent.getIntExtra("id_user", 0);
         user_name_input = findViewById(R.id.input_name);
         user_last_name_input = findViewById(R.id.input_last_name);
         user_email_input = findViewById(R.id.input_email);
