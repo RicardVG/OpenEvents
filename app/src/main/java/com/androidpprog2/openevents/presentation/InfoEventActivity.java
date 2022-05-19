@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -13,10 +14,13 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,10 +74,11 @@ public class InfoEventActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (response.isSuccessful()){
                     if (response.code() == 200) {
-                        ArrayList<Event> events = response.body();
-                        if (events.get(0)!= null) {
+                        ArrayList<Event> events = new ArrayList<Event>();
+                        if (response.body() != null) {
+                            events.addAll(response.body());
                             event = events.get(0);
-                            printEvent(events.get(0));
+                            printEvent(events.get(0), getApplicationContext());
                         }
                     }
                 } else {
@@ -89,20 +94,34 @@ public class InfoEventActivity extends AppCompatActivity {
         });
     }
 
-    private void printEvent(Event event) {
+    private void printEvent(Event event, Context context) {
 
         eventName.setText(event.getName());
         typeEvent.setText(event.getType());
-     //   participantsEvent.setText(event.getNumParticipants());
+        participantsEvent.setText(String.valueOf(event.getNumParticipants()));
         startDateEvent.setText(event.getStartDate());
         endDateEvent.setText(event.getEndDate());
         locationEvent.setText(event.getLocation());
         descriptionEvent.setText(event.getDescription());
 
-      //  if (event.getImage() != null) {
-       //     int id_image = Integer.parseInt(event.getImage());
-       //     imageEvent.setImageResource(id_image);
-       // }
+        String url = "";
+
+        if (this.event.getImage() != null) {
+            if (this.event.getImage().startsWith("https")) {
+                url = this.event.getImage();
+            } else {
+                url = "https://172.16.205.68/img/" + this.event.getImage();
+            }
+        }
+        Glide.with(context)
+                .load(url)
+                .apply(RequestOptions
+                        .bitmapTransform(new BlurTransformation(8, 1))
+                        .placeholder(R.drawable.default_event)
+                        .error(R.drawable.default_event))
+                .into(imageEvent);
+
+
     }
 }
 

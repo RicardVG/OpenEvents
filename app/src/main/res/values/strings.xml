@@ -50,4 +50,12 @@
     <string name="category_technology">Technology</string>
     <string name="category_music">Music</string>
     <string name="category_sport">Sport</string>
+    <string name="AverageScore">Average Score</string>
+    <string name="NumComments">Num. Comments</string>
+    <string name="PercentageComments">Percentage Comments</string>
+    <string name="SaveChanges">Save Changes</string>
+    <string name="NombreUsuario">Nombre Usuario</string>
+    <string name="LastName">Last Name</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
 </resources>

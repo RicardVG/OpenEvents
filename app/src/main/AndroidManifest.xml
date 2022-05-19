@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".presentation.InfoEventActivity">
         </activity>
+        <activity android:name=".presentation.UserProfileActivity">
+        </activity>
     </application>
 
 </manifest>

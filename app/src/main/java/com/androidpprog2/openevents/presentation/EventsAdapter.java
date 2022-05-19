@@ -111,8 +111,5 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
 
 
         }
-
-
-
     }
 }

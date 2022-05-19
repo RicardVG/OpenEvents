@@ -24,9 +24,9 @@ public class Event {
     private int ownerId;
     @SerializedName("date")
     private String creationDate;
-    @SerializedName("start_date")
+    @SerializedName("eventStart_date")
     private String startDate;
-    @SerializedName("end_date")
+    @SerializedName("eventEnd_date")
     private String endDate;
     @SerializedName("num_participants")
     private int numParticipants;
