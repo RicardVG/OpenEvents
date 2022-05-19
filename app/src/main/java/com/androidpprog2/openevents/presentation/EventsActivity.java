@@ -45,6 +45,7 @@ public class EventsActivity extends AppCompatActivity {
     private TextView titleMyEvents;
     private TextView titleCreateEvent;
     private SharedPreferences sh;
+    private Event event;
 
     public EventsActivity() {
 
@@ -204,26 +205,24 @@ public class EventsActivity extends AppCompatActivity {
         }
     });
     }
-    public void delete_event(){
-        deleteEvent();
 
-    }
-
-    private void deleteEvent(){
+    public void deleteEvent(View view){
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+
+       int id = ((Integer) view.getTag());
 
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
 
-
-
-        Call<Void> call = service.deleteEvent(accessToken,1);
+        Call<Void> call = service.deleteEvent(accessToken, id);
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 System.out.println("Deleted Event");
+                //adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -234,4 +233,5 @@ public class EventsActivity extends AppCompatActivity {
 
 
     }
+
 }

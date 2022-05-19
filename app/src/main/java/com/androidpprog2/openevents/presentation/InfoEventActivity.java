@@ -1,6 +1,5 @@
 package com.androidpprog2.openevents.presentation;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -74,11 +73,10 @@ public class InfoEventActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (response.isSuccessful()){
                     if (response.code() == 200) {
-                        ArrayList<Event> events = new ArrayList<Event>();
-                        if (response.body() != null) {
-                            events.addAll(response.body());
+                        ArrayList<Event> events = response.body();
+                        if (events.get(0)!= null) {
                             event = events.get(0);
-                            printEvent(events.get(0), getApplicationContext());
+                            printEvent(events.get(0));
                         }
                     }
                 } else {
@@ -94,11 +92,11 @@ public class InfoEventActivity extends AppCompatActivity {
         });
     }
 
-    private void printEvent(Event event, Context context) {
+    private void printEvent(Event event) {
 
         eventName.setText(event.getName());
         typeEvent.setText(event.getType());
-        participantsEvent.setText(String.valueOf(event.getNumParticipants()));
+     //   participantsEvent.setText(event.getNumParticipants());
         startDateEvent.setText(event.getStartDate());
         endDateEvent.setText(event.getEndDate());
         locationEvent.setText(event.getLocation());
@@ -113,7 +111,7 @@ public class InfoEventActivity extends AppCompatActivity {
                 url = "https://172.16.205.68/img/" + this.event.getImage();
             }
         }
-        Glide.with(context)
+        Glide.with(getApplicationContext())
                 .load(url)
                 .apply(RequestOptions
                         .bitmapTransform(new BlurTransformation(8, 1))

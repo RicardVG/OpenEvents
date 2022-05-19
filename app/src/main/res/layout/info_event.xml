@@ -207,6 +207,7 @@
                 </LinearLayout>
 
 
+
                 <View
                     android:id="@+id/event_detail_date_location_divider"
                     android:layout_width="match_parent"
@@ -245,6 +246,12 @@
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@+id/event_detail_header_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/delete_event_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_delete_event" />
         </ScrollView>
 
 </LinearLayout>
