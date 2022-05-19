@@ -72,7 +72,6 @@ public class UserProfileFragment extends Fragment {
         if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
-
         return view;
     }
 
