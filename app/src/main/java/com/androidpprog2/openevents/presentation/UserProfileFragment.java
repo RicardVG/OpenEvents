@@ -65,6 +65,8 @@ public class UserProfileFragment extends Fragment {
         editProfileBtn.setOnClickListener(v -> {
             startUpdateActivity();
         });
+
+
         id = getUserId();
      //   int num_comments = Integer.parseInt(String.valueOf(num_comments_user));
         if (getActivity() instanceof UserProfileActivity){
