@@ -61,6 +61,8 @@ public class CreateEventFragment extends Fragment implements Callback {
         return view;
     }
 
+
+
     private void create_Event() {
 
         if(validateData()){
