@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,17 +68,17 @@ public class UserProfileFragment extends Fragment {
         });
 
 
-        id = getUserId();
-     //   int num_comments = Integer.parseInt(String.valueOf(num_comments_user));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        id = preferences.getInt("id", getId());
+
         if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, null);
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static int getUserId() {
+/*
+    @RequiresApi(api = Build.VERSION_CODES.O) public static int getUserId() {
         String[] chunks = accessToken.split("\\.");
         Base64.Decoder decoder = Base64.getDecoder();
         String header = new String(decoder.decode(chunks[0]));
@@ -93,6 +94,8 @@ public class UserProfileFragment extends Fragment {
         return id;
     }
 
+
+ */
 
      private void startUpdateActivity() {
         Intent intent = new Intent(getContext(), UserProfileEditActivity.class);

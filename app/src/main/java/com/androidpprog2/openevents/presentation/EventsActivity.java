@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,8 @@ import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -35,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class EventsActivity extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private RecyclerView recyclerView;
     private EventsAdapter adapter;
@@ -57,14 +61,35 @@ public class EventsActivity extends AppCompatActivity {
         return intent;
     }
 
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
+        loadFragment(new HomeFragment());
+
+        BottomNavigationView navigation = findViewById(R.id.navigation_view);
+        navigation.setOnItemSelectedListener(this);
+
+
+
         recyclerView = findViewById(R.id.eventsRecyclerView);
         titleMyEvents = findViewById(R.id.titleMyEvents);
         titleCreateEvent = findViewById(R.id.titleCreateEvent);
+
         getEvents();
         sh = getSharedPreferences("sh",MODE_PRIVATE);
 
@@ -234,4 +259,22 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                fragment = new HomeFragment();
+
+                break;
+
+            case R.id.profile:
+                fragment = new UserProfileFragment();
+           //     recyclerView.setVisibility(View.GONE);
+                break;
+        }
+
+        return loadFragment(fragment);
+    }
 }

@@ -15,9 +15,12 @@ import android.widget.Toast;
 
 import com.androidpprog2.openevents.R;
 //import com.androidpprog2.openevents.UserAToken;
+import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.androidpprog2.openevents.business.LoginRequest;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,6 +87,22 @@ public class LoginActivity extends AppCompatActivity {
         LoginRequest loginRequest = new LoginRequest(email,password);
         Call<LoginRequest> callLoginRequest = service.loginUser(loginRequest);
 
+       User user = new User(email, password);
+       /*
+        ArrayList<User> userArrayList = new ArrayList<>();
+        Bundle bundle = new Bundle();
+
+        for (User u : userArrayList) {
+            if(email.equals(user.getEmail())){
+               bundle.putString("id",getString(user.getId()));
+            }
+            break;
+        }
+
+
+      */
+
+
         callLoginRequest.enqueue(new Callback<LoginRequest>() {
 
             @Override
@@ -92,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.code() == 200){
                     SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
-                    editor.putString("accessToken","Bearer" + response.body().getAccessToken()).apply();
+                    editor.putString("accessToken","Bearer" + response.body().getAccessToken() + user.getId()).apply();
                     Intent intent = EventsActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finish();
