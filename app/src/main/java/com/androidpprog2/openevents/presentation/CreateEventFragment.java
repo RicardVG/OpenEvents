@@ -66,6 +66,7 @@ public class CreateEventFragment extends Fragment implements Callback {
     private void create_Event() {
 
         if(validateData()){
+
             String name = nameInput.getEditText().getText().toString();
             String location = locationInput.getEditText().getText().toString();
             String description = descriptionInput.getEditText().getText().toString();
