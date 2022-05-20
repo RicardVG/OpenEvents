@@ -45,7 +45,7 @@ public class UserProfileFragment extends Fragment {
     private TextView avg_score;
     private TextView num_comments;
     private TextView percentage_commenters_below;
-    private ImageButton log_out;
+    private ImageView log_out;
     private static String accessToken;
     private int id;
     private SharedPreferences sh;
@@ -95,7 +95,7 @@ public class UserProfileFragment extends Fragment {
 
     private void loginOut() {
         deleteToken();
-        Intent intent = new Intent(getContext(), EventsActivity.class);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
