@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,8 +45,10 @@ public class UserProfileFragment extends Fragment {
     private TextView avg_score;
     private TextView num_comments;
     private TextView percentage_commenters_below;
+    private ImageButton log_out;
     private static String accessToken;
     private int id;
+    private SharedPreferences sh;
 
     public UserProfileFragment() {
     }
@@ -63,6 +67,7 @@ public class UserProfileFragment extends Fragment {
         num_comments = view.findViewById(R.id.num_comments);
         percentage_commenters_below = view.findViewById(R.id.percentage_comments_below);
         editProfileBtn = view.findViewById(R.id.editProfile);
+        log_out = view.findViewById(R.id.log_out);
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +76,12 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-
+        log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginOut();
+            }
+        });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         id = preferences.getInt("id", getId());
@@ -81,6 +91,20 @@ public class UserProfileFragment extends Fragment {
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
         return inflater.inflate(R.layout.fragment_profile, null);
+    }
+
+    private void loginOut() {
+        deleteToken();
+        Intent intent = new Intent(getContext(), EventsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void deleteToken() {
+        sh = requireContext().getSharedPreferences("sh", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sh.edit();
+        editor.remove(accessToken);
+        editor.apply();
     }
 
 /*

@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -27,6 +29,11 @@ import retrofit2.Retrofit;
 
 public class UserProfileActivity extends AppCompatActivity {
     private UserProfileFragment userProfileFragment;
+
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, UserProfileActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

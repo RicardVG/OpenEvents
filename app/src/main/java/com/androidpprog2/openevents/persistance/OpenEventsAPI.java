@@ -18,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -55,4 +56,9 @@ public interface OpenEventsAPI {
 
     @GET("events/{id}/assistances")//numero dassistents dins de un event
     Call<ArrayList<User>> getAssistances(@Header("authorization") String token, @Path("id") int id);
+
+    @PUT("users")
+    Call<User> updateUser(@Header("authorization") String accessToken,
+                                   @Body User user);
+
 }

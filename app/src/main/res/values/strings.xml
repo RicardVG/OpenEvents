@@ -59,4 +59,11 @@
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="button_delete_event">Delete Event</string>
+    <string name="LastNameError">The Last Name is wrong!</string>
+    <string name="EmailErrorEmpty">The email is empty!</string>
+    <string name="EmailErrorSyntax">The email is wrong!</string>
+    <string name="NameError">The name is wrong!</string>
+    <string name="PasswordError">The password is wrong!</string>
+    <string name="BodyError">Body Error!</string>
+    <string name="IncorrectInsert">Incorrect insert data!</string>
 </resources>

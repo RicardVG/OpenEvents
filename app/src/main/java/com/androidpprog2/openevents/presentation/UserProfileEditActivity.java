@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +21,14 @@ import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,12 +43,11 @@ public class UserProfileEditActivity extends AppCompatActivity {
     private TextInputLayout user_email_input;
     private TextInputLayout user_password_input;
     private User user;
+    private MaterialButton applyChanges;
 
     @NonNull
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, UserProfileEditActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        int id = intent.getIntExtra("id_user", 0);
         return intent;
     }
 
@@ -59,11 +64,12 @@ public class UserProfileEditActivity extends AppCompatActivity {
         user_email_input = findViewById(R.id.input_email);
         user_image = findViewById(R.id.user_image);
         user_password_input = findViewById(R.id.input_password);
+        applyChanges = findViewById(R.id.apply_changes_btn);
 
         getUserInformation(id);
        // validationListeners();
 
-      //  apply_changes_btn.setOnClickListener(v -> { saveChanges(); });
+        applyChanges.setOnClickListener(v -> { saveChanges(); });
     }
 
     private void getUserInformation(int id) {
@@ -105,28 +111,196 @@ public class UserProfileEditActivity extends AppCompatActivity {
         });
     }
 
-  /*  public void saveChanges() {
+    public void saveChanges() {
         if(validateData()){
-            String name = nameInput.getEditText().getText().toString();
-            String lastName = lastNameInput.getEditText().getText().toString();
-            String email = emailInput.getEditText().getText().toString();
+            String name = user_name_input.getEditText().getText().toString();
+            String lastName = user_last_name_input.getEditText().getText().toString();
+            String email = user_email_input.getEditText().getText().toString();
+            String password = user_password_input.getEditText().getText().toString();
+            String image = user_image.toString();
 
-      //      loading(true);
-            if(mImageFile == null) {
-                CallSingelton
-                        .getInstance()
-                        .updateUser(null, name, lastName, email, this);
-            }else {
-                CallSingelton
-                        .getInstance()
-                        .updateUser(mImageFile, name, lastName, email, this);
-            }
+            updateUser(name, lastName, email, password, image);
+
         }
     }
 
+    private void updateUser(String name, String lastName, String email, String password, String image) {
+        Retrofit retrofit = APIClient.getRetrofitInstance();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+        User user = new User(name, lastName, email, password, image);
+        Call<User> call = service.registerUser(user);
 
-   */
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 201) {
+                        //Decidir que fer
+                        System.out.println("Actualitzat");
+                        Intent intent = UserProfileActivity.newIntent(UserProfileEditActivity.this);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (response.code() == 400){
+                        Toast.makeText(getApplicationContext(), getString(R.string.BodyError), Toast.LENGTH_LONG).show();
+                    }else if (response.code() == 409){
+                        Toast.makeText(getApplicationContext(), getString(R.string.IncorrectInsert), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    try {
+                        System.out.println(response.errorBody().toString());
+                        Toast.makeText(getApplicationContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public boolean validateData(){
+        boolean error = true;
+        if(validateFirstName(user_name_input.getEditText().getText().toString())) error = false;
+        if(validateLastName(user_last_name_input.getEditText().getText().toString())) error = false;
+        if(validateEmail(user_email_input.getEditText().getText().toString())) error = false;
+        if(validatePassword(user_password_input.getEditText().getText().toString())) error = false;
+        return error;
+    }
+
+    public void validationListeners(){
+        user_name_input.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validateFirstName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        user_last_name_input.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validateLastName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        user_email_input.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validateEmail(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        user_password_input.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validatePassword(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        user_name_input.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                validateFirstName(user_name_input.getEditText().getText().toString());
+        });
+
+        user_last_name_input.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                validateFirstName(user_last_name_input.getEditText().getText().toString());
+        });
+
+        user_email_input.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                validateFirstName(user_email_input.getEditText().getText().toString());
+        });
+
+        user_email_input.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                saveChanges();
+                return true;
+            }
+            return false;
+        });
+
+        user_password_input.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                validatePassword(user_password_input.getEditText().getText().toString());
+        });
+
+    }
+
+    private boolean validateFirstName(String firstName) {
+        if (firstName.isEmpty()) {
+            user_name_input.setError(getString(R.string.NameError));
+            return true;
+        }
+        user_name_input.setErrorEnabled(false);
+        return false;
+    }
+
+    private boolean validateLastName(String lastName) {
+        if (lastName.isEmpty()) {
+            user_last_name_input.setError(getString(R.string.LastNameError));
+            return true;
+        }
+        user_last_name_input.setErrorEnabled(false);
+        return false;
+    }
+
+    private boolean validateEmail(String email) {
+        if (email.isEmpty()) {
+            user_email_input.setError(getString(R.string.EmailErrorEmpty));
+            return true;
+        }
+        if (!isEmailValid(email)) {
+            user_email_input.setError(getString(R.string.EmailErrorSyntax));
+            return true;
+        }
+        user_email_input.setErrorEnabled(false);
+        return false;
+    }
+
+    public boolean isEmailValid(String email) {
+        String expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.isEmpty()) {
+            user_password_input.setError(getString(R.string.PasswordError));
+            return true;
+        }
+        user_password_input.setErrorEnabled(false);
+        return false;
+    }
 
 
     private void setImage(String image) {
