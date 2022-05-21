@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +46,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment, userProfileFragment, userProfileFragment.getTag())
+                .add(R.id.fragment_container, userProfileFragment, userProfileFragment.getTag())
                 .commit();
 
 
@@ -103,7 +104,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         RequestOptions options = new RequestOptions()
                 .error(R.drawable.img_default);
-        Glide.with(userProfileFragment.getActivity())
+        Glide.with(userProfileFragment.requireActivity())
                 .applyDefaultRequestOptions(options)
                 .load(url)
                 .into(imageView);

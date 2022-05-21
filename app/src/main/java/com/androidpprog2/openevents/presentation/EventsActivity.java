@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -120,7 +121,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
 
     private void moveToFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                .replace(R.id.fragment_container, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
     }
 
@@ -147,11 +148,6 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
  */
         int n_participators;
         n_participators = Integer.parseInt(capacity);
-        int id = 0;
-        String comentary = "hola";
-        String puntuation = "1";
-        int ownerId = 0;
-        String creationDate = "17/06/2022";
         Event event = new Event(name,image,location,description,eventStart_date,eventEnd_date,n_participators,type);
 
         Call<Event> call = service.createEvent(
@@ -162,7 +158,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
             public void onResponse(Call<Event> call, Response<Event> response) {
 //                createEventFragment.loading(false);
                 if (response.isSuccessful()) {
-                    if (response.code() == 201) {
+                    if (response.code() == 200) {
                         System.out.println("HOLA?????????????????????????");
                         createEventFragment.refreshTextFields();
                         Intent intent = EventsActivity.newIntent(EventsActivity.this);
@@ -217,6 +213,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
                         ArrayList<Event> created = response.body();
                         adapter = new EventsAdapter(created, getApplicationContext());
                         recyclerView.setAdapter(adapter);
+                        Log.d("MAIN","TODOOKGETUSERRRSSS");
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Incorrect data. Please try again!", Toast.LENGTH_LONG).show();
@@ -257,7 +254,9 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         });
 
 
+
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

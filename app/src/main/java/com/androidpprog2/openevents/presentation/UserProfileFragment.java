@@ -37,7 +37,7 @@ import retrofit2.Retrofit;
 
 public class UserProfileFragment extends Fragment {
 
-    private ImageButton editProfileBtn;
+    private ImageView editProfileBtn;
     private ImageView profileImage;
     private TextView profileName;
     private TextView profileLastName;
@@ -90,7 +90,7 @@ public class UserProfileFragment extends Fragment {
         if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
-        return inflater.inflate(R.layout.fragment_profile, null);
+        return view;
     }
 
     private void loginOut() {

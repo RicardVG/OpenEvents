@@ -81,10 +81,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.context = _context;
             String url = "";
             if (this.event.getImage() != null) {
-                if (this.event.getImage().startsWith("https")) {
+                if (this.event.getImage().startsWith("http")) {
                     url = this.event.getImage();
                 } else {
-                    url = "https://172.16.205.68/img/" + this.event.getImage();
+                    url = "http://172.16.205.68/img/" + this.event.getImage();
                 }
             }
 
