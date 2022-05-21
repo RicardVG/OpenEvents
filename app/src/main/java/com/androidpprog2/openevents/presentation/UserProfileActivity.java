@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.User;
@@ -36,6 +37,8 @@ public class UserProfileActivity extends AppCompatActivity {
         return intent;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +47,15 @@ public class UserProfileActivity extends AppCompatActivity {
 
         userProfileFragment = new UserProfileFragment();
 
-        getSupportFragmentManager()
+        userProfileFragment.getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, userProfileFragment, userProfileFragment.getTag())
+                .add(R.id.fragment_container, userProfileFragment , userProfileFragment.getTag())
                 .commit();
 
-     /*   Intent intent = getIntent();
+
+
+
+        Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
         String profileNameString = intent.getStringExtra("profileName");
         String profileLastNameString = intent.getStringExtra("profileLastName");
@@ -81,9 +87,11 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
-      */
-//        setProfileInformation(id,profileImage,profileName,profileLastName,profileEmail,avg_score,num_comments,percentage_commenters_below);
+
+        setProfileInformation(id,profileImage,profileName,profileLastName,profileEmail,avg_score,num_comments,percentage_commenters_below);
     }
+
+
 
 
     public void setProfileInformation(int id, ImageView image, TextView name, TextView last_name, TextView email, TextView avg_score, TextView num_comments, TextView percentage_commenters_below) {
@@ -101,12 +109,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.code() == 200) {
                         ArrayList<User> user = response.body();
-                        name.setText((CharSequence) user.get(0));
-                        last_name.setText((CharSequence) user.get(0));
-                        email.setText((CharSequence) user.get(0));
-                        avg_score.setText((CharSequence) user.get(0));
-                        num_comments.setText((CharSequence) user.get(0));
-                        percentage_commenters_below.setText((CharSequence) user.get(0));
+                        name.setText(user.get(0).getName());
+                        last_name.setText(user.get(0).getLast_name());
+                        email.setText(user.get(0).getEmail());
+                        avg_score.setText(user.get(0).getAvg_score());
+                        num_comments.setText(user.get(0).getNum_comments());
+                        percentage_commenters_below.setText(user.get(0).getPercentage_commenters_below());
                         setImage(user.get(0).getImage(), image);
                     }
                 } else {

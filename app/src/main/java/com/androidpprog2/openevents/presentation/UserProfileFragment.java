@@ -88,14 +88,17 @@ public class UserProfileFragment extends Fragment {
         id = preferences.getInt("id", getId());
 
 
-
+/*
        if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
 
 
+ */
 
-    /*   Intent intent = new Intent(getActivity().getBaseContext(),UserProfileActivity.class);
+        Intent intent = UserProfileActivity.newIntent(getContext());
+
+    //   Intent intent = new Intent(getActivity().getBaseContext(),UserProfileActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("profileName", String.valueOf(profileName));
         intent.putExtra("profileLastName", String.valueOf(profileLastName));
@@ -103,11 +106,12 @@ public class UserProfileFragment extends Fragment {
         intent.putExtra("avg_score", String.valueOf(avg_score));
         intent.putExtra("num_comments", String.valueOf(num_comments));
         intent.putExtra("percentage_commenters_below", String.valueOf(percentage_commenters_below));
-        getActivity().startActivity(intent);
 
-    //    return inflater.inflate(R.layout.fragment_profile, null);
+        startActivity(intent);
 
-     */
+     //   return inflater.inflate(R.layout.fragment_profile, null);
+
+
         return view;
     }
 

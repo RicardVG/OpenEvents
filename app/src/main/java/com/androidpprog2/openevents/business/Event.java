@@ -78,32 +78,12 @@ public class Event {
         return type;
     }
 
-    public String getComentary() {
-        return comentary;
-    }
-
-    public String getPuntuation() {
-        return puntuation;
-    }
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
     public String getStartDate() {
         return startDate;
     }
 
     public String getEndDate() {
         return endDate;
-    }
-
-    public int getNumParticipants() {
-        return numParticipants;
     }
 
     public int getId() {

@@ -128,7 +128,7 @@ public class UserProfileEditActivity extends AppCompatActivity {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         User user = new User(name, lastName, email, password, image);
-        Call<User> call = service.registerUser(user);
+        Call<User> call = service.updateUser("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM",user);
 
         call.enqueue(new Callback<User>() {
             @Override

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
-import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,9 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +82,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
 
 
 
-        recyclerView = findViewById(R.id.eventsRecyclerView);
+        recyclerView = findViewById(R.id.eventsRecycleView);
         titleMyEvents = findViewById(R.id.titleMyEvents);
         titleCreateEvent = findViewById(R.id.titleCreateEvent);
 
@@ -278,8 +274,13 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
                 addEvent.setVisibility(View.GONE);
                 titleMyEvents.setVisibility(View.INVISIBLE);
                 fragment = new UserProfileFragment();
+                break;
 
-
+            case R.id.users:
+                recyclerView.setVisibility(View.GONE);
+                addEvent.setVisibility(View.GONE);
+                titleMyEvents.setVisibility(View.INVISIBLE);
+                fragment = new UsersFragment();
                 break;
         }
 

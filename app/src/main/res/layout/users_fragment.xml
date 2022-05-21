@@ -8,17 +8,10 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/titleCreateEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="17dp"
-            android:text="Create Event"
-            android:textSize="24sp"
-            android:visibility="invisible" />
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,7 +30,7 @@
         app:menu="@menu/my_navigation_items" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eventsRecycleView"
+        android:id="@+id/usersRecycleView"
         android:layout_width="404dp"
         android:layout_height="587dp"
         android:layout_marginTop="62dp"
@@ -49,23 +42,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/titleMyEvents"
+        android:id="@+id/titleUsers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
         android:layout_marginTop="17dp"
-        android:text="My Events"
+        android:text="@string/Users"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/addEvent"
-        android:layout_width="42dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_box_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
