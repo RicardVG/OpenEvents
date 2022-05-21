@@ -14,6 +14,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -39,9 +41,17 @@ public interface OpenEventsAPI {
     Call<ArrayList<Event>> getEvents(@Header("Authorization") String accessToken);
 
 
+    @FormUrlEncoded
     @POST("events")
     Call<Event> createEvent(@Header("Authorization") String accessToken,
-                            @Body Event event);
+                            @Field("name") String name,
+                            @Field("image") String image,
+                            @Field("location") String location,
+                            @Field("description") String description,
+                            @Field("eventStart_date") Date eventStart_date,
+                            @Field("eventEnd_date") Date eventEnd_date,
+                            @Field("n_participators") int n_participators,
+                            @Field("type") String type);
 
     @GET("events/{id}")
     Call<ArrayList<Event>> getEvent(@Header("Authorization") String accessToken, @Path("id") int id);

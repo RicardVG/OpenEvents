@@ -80,7 +80,7 @@ public class UserProfileEditActivity extends AppCompatActivity {
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
 
-        Call<ArrayList<User>> call = service.getUserProfile(accessToken, id);
+        Call<ArrayList<User>> call = service.getUserProfile("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {

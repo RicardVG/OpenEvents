@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,9 +88,26 @@ public class UserProfileFragment extends Fragment {
         id = preferences.getInt("id", getId());
 
 
-        if (getActivity() instanceof UserProfileActivity){
+
+       if (getActivity() instanceof UserProfileActivity){
             ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
         }
+
+
+
+    /*   Intent intent = new Intent(getActivity().getBaseContext(),UserProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("profileName", String.valueOf(profileName));
+        intent.putExtra("profileLastName", String.valueOf(profileLastName));
+        intent.putExtra("profileEmail", String.valueOf(profileEmail));
+        intent.putExtra("avg_score", String.valueOf(avg_score));
+        intent.putExtra("num_comments", String.valueOf(num_comments));
+        intent.putExtra("percentage_commenters_below", String.valueOf(percentage_commenters_below));
+        getActivity().startActivity(intent);
+
+    //    return inflater.inflate(R.layout.fragment_profile, null);
+
+     */
         return view;
     }
 

@@ -109,9 +109,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
                 Log.d("MAIN","TODOOK");
                 if (response.code() == 200){
-                    SharedPreferences sh = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences sh = getSharedPreferences("sh",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
-                    editor.putString("accessToken","Bearer" + response.body().getAccessToken() + user.getId()).apply();
+                    editor.putString("accessToken","Bearer " + response.body().getAccessToken() + user.getId());
+                    editor.apply();
+                    System.out.println(sh.getString("accessToken","Bearer"));
                     Intent intent = EventsActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finish();

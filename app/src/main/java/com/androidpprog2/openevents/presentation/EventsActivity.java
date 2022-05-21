@@ -49,7 +49,6 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
     private ImageView addEvent;
     private TextView titleMyEvents;
     private TextView titleCreateEvent;
-    private SharedPreferences sh;
     private Event event;
 
     public EventsActivity() {
@@ -92,7 +91,6 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         titleCreateEvent = findViewById(R.id.titleCreateEvent);
 
         getEvents();
-        sh = getSharedPreferences("sh",MODE_PRIVATE);
 
 
         addEvent = findViewById(R.id.addEvent);
@@ -132,9 +130,11 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
+        SharedPreferences sh;
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
-/*
+        System.out.println(accessToken);
+
         Date startDate = null;
         Date endDate = null;
         try {
@@ -145,22 +145,20 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         }
 
 
- */
+
         int n_participators;
         n_participators = Integer.parseInt(capacity);
-        Event event = new Event(name,image,location,description,eventStart_date,eventEnd_date,n_participators,type);
+    //    Event event = new Event(name,image,location,description,eventStart_date,eventEnd_date,n_participators,type);
 
         Call<Event> call = service.createEvent(
-                accessToken,event);
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM",name,image,location,description,startDate,endDate,n_participators,type);
 
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
-//                createEventFragment.loading(false);
                 if (response.isSuccessful()) {
-                    if (response.code() == 200) {
-                        System.out.println("HOLA?????????????????????????");
-                        createEventFragment.refreshTextFields();
+                    if (response.code() == 201) {
+                        Toast.makeText(getApplicationContext(), R.string.createEvent_correct, Toast.LENGTH_SHORT).show();
                         Intent intent = EventsActivity.newIntent(EventsActivity.this);
                         startActivity(intent);
                     }
@@ -193,8 +191,10 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
-        sh = getSharedPreferences("sh",MODE_PRIVATE);
+
+        SharedPreferences sh = getSharedPreferences("sh",Context.MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
+        System.out.println(accessToken);
 
         adapter = new EventsAdapter(new ArrayList<>(), getApplicationContext());
         recyclerView.setAdapter(adapter);
@@ -234,6 +234,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
 
        int id = ((Integer) view.getTag());
 
+       SharedPreferences sh;
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
 
@@ -243,7 +244,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 System.out.println("Deleted Event");
-                //adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
 
             }
 

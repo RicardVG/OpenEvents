@@ -205,28 +205,5 @@ public class CreateEventFragment extends Fragment implements Callback {
     }
 
 
-    void refreshTextFields() {
-        nameInput.getEditText().getText().clear();
-        nameInput.setErrorEnabled(false);
-        locationInput.getEditText().getText().clear();
-        locationInput.setErrorEnabled(false);
-        descriptionInput.getEditText().getText().clear();
-        descriptionInput.setErrorEnabled(false);
-        startDateInput.getEditText().getText().clear();
-        startDateInput.setErrorEnabled(false);
-        startTimeInput.getEditText().getText().clear();
-        startTimeInput.setErrorEnabled(false);
-        endDateInput.getEditText().getText().clear();
-        endDateInput.setErrorEnabled(false);
-        endTimeInput.getEditText().getText().clear();
-        endTimeInput.setErrorEnabled(false);
-        categoryInput.getEditText().getText().clear();
-        categoryInput.setErrorEnabled(false);
-        capacityInput.getEditText().getText().clear();
-        capacityInput.setErrorEnabled(false);
-
-        Toast.makeText(getContext(), R.string.createEvent_correct, Toast.LENGTH_SHORT).show();
-    }
-
 
 }
