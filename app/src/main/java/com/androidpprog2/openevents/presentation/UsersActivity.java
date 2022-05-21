@@ -59,7 +59,7 @@ public class UsersActivity extends AppCompatActivity {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
+                    .replace(R.id.user_fragment_container, fragment)
                     .commit();
         }
     }
