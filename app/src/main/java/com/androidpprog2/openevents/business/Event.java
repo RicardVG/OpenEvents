@@ -66,6 +66,10 @@ public class Event {
         return location;
     }
 
+    public int getNumParticipants() {
+        return numParticipants;
+    }
+
     public String getDescription() {
         return description;
     }

@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -17,7 +18,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
@@ -65,9 +69,9 @@ public class InfoEventActivity extends AppCompatActivity {
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
         int id = getIntent().getExtras().getInt("id");
-        sh = getSharedPreferences("sh",MODE_PRIVATE);
-        String accessToken = sh.getString("accessToken","Bearer");
-        Call<ArrayList<Event>> call = service.getEvent(accessToken, id);
+       // sh = getSharedPreferences("sh",MODE_PRIVATE);
+       // String accessToken = sh.getString("accessToken","Bearer");
+        Call<ArrayList<Event>> call = service.getEvent("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
         call.enqueue(new Callback<ArrayList<Event>>() {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
@@ -76,7 +80,11 @@ public class InfoEventActivity extends AppCompatActivity {
                         ArrayList<Event> events = response.body();
                         if (events.get(0)!= null) {
                             event = events.get(0);
-                            printEvent(events.get(0));
+                            try {
+                                printEvent(events.get(0));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 } else {
@@ -92,14 +100,18 @@ public class InfoEventActivity extends AppCompatActivity {
         });
     }
 
-    private void printEvent(Event event) {
+    private void printEvent(Event event) throws ParseException {
+      //  @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy · hh:mm a");
 
         eventName.setText(event.getName());
         typeEvent.setText(event.getType());
-     //   participantsEvent.setText(event.getNumParticipants());
+
+    //    Date date1 = formatter.parse(event.getStartDate());
         startDateEvent.setText(event.getStartDate());
+     //   Date date2 = formatter.parse(event.getEndDate());
         endDateEvent.setText(event.getEndDate());
         locationEvent.setText(event.getLocation());
+        participantsEvent.setText(String.valueOf(event.getNumParticipants()));
         descriptionEvent.setText(event.getDescription());
 
         String url = "";

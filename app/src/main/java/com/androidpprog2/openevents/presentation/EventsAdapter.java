@@ -2,6 +2,7 @@ package com.androidpprog2.openevents.presentation;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,7 +21,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.card.MaterialCardView;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -43,7 +47,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
 
     @Override
     public void onBindViewHolder(@NonNull EventsAdapter.EventsListViewHolder holder, int position) {
-        holder.bind(events.get(position), context);
+        try {
+            holder.bind(events.get(position), context);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -76,7 +84,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
 
         }
 
-        public void bind(Event _event, Context _context) {
+        public void bind(Event _event, Context _context) throws ParseException {
             this.event = _event;
             this.context = _context;
             String url = "";
@@ -96,12 +104,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
                             .error(R.drawable.default_event))
                     .into(event_image);
 
+
             this.eventCard.setOnClickListener(this);
             this.name.setText(this.event.getName());
             this.location.setText(this.event.getLocation());
-            this.date.setText((CharSequence) this.event.getEndDate());
+            this.date.setText(this.event.getStartDate());
             this.category.setText(this.event.getType());
-            this.deleteEventButton.setTag(new Integer(this.event.getId()));
+
         }
 
         @Override
