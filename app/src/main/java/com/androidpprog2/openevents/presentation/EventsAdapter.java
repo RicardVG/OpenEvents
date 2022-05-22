@@ -99,7 +99,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             Glide.with(context)
                     .load(url)
                     .apply(RequestOptions
-                            .bitmapTransform(new BlurTransformation(10, 3))
+                            .bitmapTransform(new BlurTransformation(10, 1))
                             .placeholder(R.drawable.default_event)
                             .error(R.drawable.default_event))
                     .into(event_image);

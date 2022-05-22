@@ -7,7 +7,7 @@
     android:paddingHorizontal="12dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/event_card"
+        android:id="@+id/userCard"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_margin="15dp"
@@ -17,7 +17,7 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:strokeColor="@color/gray"
-        app:strokeWidth="2dp"
+        app:strokeWidth="5dp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="10dp">
 
@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="260dp"
                 android:layout_marginTop="40dp"
-                android:text="TextView" />
+                android:text="TextView"
+                />
 
             <TextView
                 android:id="@+id/textView20"
@@ -48,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
                 android:layout_marginTop="40dp"
-                android:text="Name:" />
+                android:text="Name:"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/userLastName"
@@ -64,31 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
                 android:layout_marginTop="70dp"
-                android:text="Last Name:" />
-
-            <TextView
-                android:id="@+id/userID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="260dp"
-                android:layout_marginTop="100dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="100dp"
-                android:text="Id:" />
-
-            <TextView
-                android:id="@+id/userEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="130dp"
-                android:text="TextView" />
+                android:text="Last Name:"
+                android:textStyle="bold"/>
 
         </FrameLayout>
 

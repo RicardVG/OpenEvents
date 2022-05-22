@@ -186,7 +186,7 @@ public class UserProfileFragment extends Fragment {
         }
 
         RequestOptions options = new RequestOptions()
-                .error(R.drawable.img_default);
+                .error(R.drawable.user_profile_photo);
         Glide.with(getContext())
                 .applyDefaultRequestOptions(options)
                 .load(url)

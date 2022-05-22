@@ -1,6 +1,7 @@
 package com.androidpprog2.openevents.presentation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -55,8 +55,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
         private ImageView user_image;
         private TextView user_name;
         private TextView user_lastName;
-        private TextView user_id;
-        private TextView user_email;
         private MaterialCardView userCard;
 
         public UsersAdapterViewHolder(@NonNull View itemView) {
@@ -64,8 +62,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
             this.user_image = (ImageView) itemView.findViewById(R.id.userImage);
             this.user_name = (TextView) itemView.findViewById(R.id.userName);
             this.user_lastName = (TextView) itemView.findViewById(R.id.userLastName);
-            this.user_id = (TextView) itemView.findViewById(R.id.userID);
-            this.user_email = (TextView) itemView.findViewById(R.id.userEmail);
+            this.userCard = (MaterialCardView) itemView.findViewById(R.id.userCard);
+
         }
 
         public void bind(User _user, Context _context) {
@@ -86,22 +84,24 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
             Glide.with(context)
                     .load(url)
                     .apply(RequestOptions
-                            .bitmapTransform(new BlurTransformation(10, 3))
+                            .bitmapTransform(new BlurTransformation(10, 1))
                             .placeholder(R.drawable.default_event)
-                            .error(R.drawable.icon_profile))
+                            .error(R.drawable.icon_profile_user))
                     .into(user_image);
 
 
-          //  this.userCard.setOnClickListener(this);
+            this.userCard.setOnClickListener(this);
             this.user_name.setText(this.user.getName());
             this.user_lastName.setText(this.user.getLast_name());
-            this.user_id.setText(Integer.toString(this.user.getId()));
-            this.user_email.setText(this.user.getEmail());
+       //     this.user_id.setText(Integer.toString(this.user.getId()));
+       //     this.user_email.setText(this.user.getEmail());
         }
 
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(context, InfoUserActivity.class);
+            intent.putExtra("id", this.user.getId());
+            this.context.startActivity(intent);
         }
     }
 }

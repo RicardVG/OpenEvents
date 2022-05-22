@@ -23,6 +23,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface OpenEventsAPI {
 
@@ -56,6 +57,8 @@ public interface OpenEventsAPI {
     @GET("events/{id}")
     Call<ArrayList<Event>> getEvent(@Header("Authorization") String accessToken, @Path("id") int id);
 
+    @GET("users/search")
+    Call<ArrayList<User>> searchUsers(@Header("Authorization") String accessToken, @Query ("s") String s);
 
     @DELETE("events/{id}")
     Call<Event> deleteEvent(@Header("Authorization") String accessToken, @Path("id") int id);

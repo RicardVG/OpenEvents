@@ -23,19 +23,6 @@
             tools:layout_editor_absoluteX="0dp">
 
 
-            <ImageButton
-                android:id="@+id/editProfile"
-                android:layout_width="39dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="-1dp"
-                android:padding="3dp"
-                android:src="@drawable/ic_baseline_edit_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black"
-                tools:ignore="MissingConstraints" />
-
             <LinearLayout
                 android:id="@+id/statistics"
                 android:layout_width="match_parent"
@@ -236,14 +223,34 @@
                     android:id="@+id/imageProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/img_default" />
+                    android:src="@drawable/user_profile_photo"
+                    android:layout_marginTop="45dp"/>
 
                 <TextView
                     android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="123dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
                     android:text="My Profile"
                     android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/editProfile"
+                    android:layout_width="39dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="190dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    app:tint="@color/black"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/log_out"
+                    android:layout_width="54dp"
+                    android:layout_height="43dp"
+                    android:layout_marginStart="240dp"
+                    android:src="@drawable/ic_baseline_login_24" />
 
             </androidx.cardview.widget.CardView>
 
@@ -255,6 +262,7 @@
                 android:layout_marginTop="28dp"
                 android:text="Email:"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -265,6 +273,7 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="28dp"
                 android:text="Last Name:"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_user" />
@@ -276,21 +285,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="26dp"
                 android:text="Name:"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/name_user"
                 app:layout_constraintTop_toBottomOf="@+id/profileImage" />
-
-            <ImageView
-                android:id="@+id/log_out"
-                android:layout_width="38dp"
-                android:layout_height="63dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_baseline_login_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.416"
-                app:layout_constraintStart_toEndOf="@+id/profileImage"
-                app:layout_constraintTop_toBottomOf="@+id/editProfile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
