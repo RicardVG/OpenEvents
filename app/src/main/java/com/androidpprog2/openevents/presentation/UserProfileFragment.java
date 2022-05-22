@@ -72,12 +72,7 @@ public class UserProfileFragment extends Fragment {
         editProfileBtn = view.findViewById(R.id.editProfile);
         log_out = view.findViewById(R.id.log_out);
 
-        editProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-          //      startUpdateActivity();
-            }
-        });
+
 
         log_out.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +81,57 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences preferences = getActivity().getSharedPreferences("sh", Context.MODE_PRIVATE);
+
         String id_final = preferences.getString("id","0");
+
+        SharedPreferences.Editor editor = preferences.edit();
+
         int id = Integer.parseInt(id_final);
 
-        setProfileInformation(id,profileImage,profileName,profileLastName,profileEmail, avg_score, num_comments,percentage_commenters_below);
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startUpdateActivity(id);
+            }
+        });
 
+
+        setProfileInformation(id,profileImage,profileName,profileLastName,profileEmail, avg_score, num_comments,percentage_commenters_below);
+        setStadistics(id);
         return view;
+    }
+
+    public void setStadistics(int id) {
+        Retrofit retrofit = APIClient.getRetrofitInstance();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+        Call<User> call = service.getStatistics("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 200) {
+                        User user = response.body();
+                        avg_score.setText(user.getAvg_score());
+                        num_comments.setText(String.valueOf(user.getNum_comments()));
+                        percentage_commenters_below.setText(user.getPercentage_commenters_below());
+                    }
+                } else {
+                    try {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
 
@@ -117,9 +156,6 @@ public class UserProfileFragment extends Fragment {
                         name.setText(user.get(0).getName());
                         last_name.setText(user.get(0).getLast_name());
                         email.setText(user.get(0).getEmail());
-                  //      avg_score.setText(user.get(0).getAvg_score());
-                   //     num_comments.setText(user.get(0).getNum_comments());
-                   //     percentage_commenters_below.setText(user.get(0).getPercentage_commenters_below());
                         setImage(user.get(0).getImage(), image);
                     }
                 } else {
@@ -171,14 +207,15 @@ public class UserProfileFragment extends Fragment {
         editor.remove("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM");
         editor.apply();
     }
-/*
-     private void startUpdateActivity() {
-         Intent intent = UserProfileEditActivity.newIntent(getContext());
-         intent.putExtra("id_user",id);
+
+     private void startUpdateActivity(int id) {
+       //  Intent intent = UserProfileEditActivity.newIntent(getContext());
+         Intent intent = new Intent(getContext(),UserProfileEditActivity.class);
+         intent.putExtra("id", id);
          startActivity(intent);
 
     }
 
- */
+
 
 }

@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -67,15 +68,15 @@ public class UsersFragment extends Fragment {
                         users_adapter = new UsersAdapter(users_list, getContext());
                         usersRecycleView.setAdapter(users_adapter);
 
+                        SharedPreferences preferences = getActivity().getSharedPreferences("sh", Context.MODE_PRIVATE);
 
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                        String email_rebut = preferences.getString("email","hola@gmail.com");
+                        String email_rebut = preferences.getString("email",null);
 
                         SharedPreferences.Editor editor = preferences.edit();
 
                         for (int i = 0; i < users_list.size(); i++){
-                            if(email_rebut.equals(users_list.get(0).getEmail())){
-                                int id_final = users_list.get(0).getId();
+                            if(email_rebut.equals(users_list.get(i).getEmail())){
+                                int id_final = users_list.get(i).getId();
                                 editor.putString("id", String.valueOf(id_final));
                                 editor.apply();
                             }

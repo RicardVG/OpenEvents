@@ -67,8 +67,8 @@ public interface OpenEventsAPI {
     Call<ArrayList<User>> getUsers(@Header("Authorization") String accessToken);
 
 
-    @GET("events/{id}/assistances")//numero dassistents dins de un event
-    Call<ArrayList<User>> getAssistances(@Header("authorization") String token, @Path("id") int id);
+    @GET("users/{id}/statistics")
+    Call<User> getStatistics(@Header("Authorization") String accessToken, @Path("id") int id);
 
     @PUT("users")
     Call<User> updateUser(@Header("authorization") String accessToken,

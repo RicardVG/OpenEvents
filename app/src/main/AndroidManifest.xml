@@ -31,8 +31,6 @@
         </activity>
         <activity android:name=".presentation.InfoEventActivity">
         </activity>
-        <activity android:name=".presentation.UserProfileActivity">
-        </activity>
         <activity android:name=".presentation.UserProfileEditActivity">
         </activity>
         <activity android:name=".presentation.UsersActivity">

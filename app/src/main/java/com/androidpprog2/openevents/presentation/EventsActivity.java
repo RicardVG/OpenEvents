@@ -47,6 +47,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         return intent;
     }
 
+
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {

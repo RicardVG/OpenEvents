@@ -44,21 +44,21 @@ public class UserProfileEditActivity extends AppCompatActivity {
     private TextInputLayout user_password_input;
     private User user;
     private MaterialButton applyChanges;
-
+/*
     @NonNull
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, UserProfileEditActivity.class);
+
         return intent;
     }
 
+
+ */
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user_profile);
-
-        Intent intent = new Intent();
-        int id = intent.getIntExtra("id_user", 0);
         user_name_input = findViewById(R.id.input_name);
         user_last_name_input = findViewById(R.id.input_last_name);
         user_email_input = findViewById(R.id.input_email);
@@ -66,6 +66,9 @@ public class UserProfileEditActivity extends AppCompatActivity {
         user_password_input = findViewById(R.id.input_password);
         applyChanges = findViewById(R.id.apply_changes_btn);
 
+
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", 0);
         getUserInformation(id);
        // validationListeners();
 
@@ -76,9 +79,12 @@ public class UserProfileEditActivity extends AppCompatActivity {
 
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+        /*
         SharedPreferences sh;
         sh = getSharedPreferences("sh",MODE_PRIVATE);
         String accessToken = sh.getString("accessToken","Bearer");
+
+         */
 
         Call<ArrayList<User>> call = service.getUserProfile("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
         call.enqueue(new Callback<ArrayList<User>>() {
@@ -86,13 +92,12 @@ public class UserProfileEditActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 if (response.isSuccessful()) {
                     if (response.code() == 200) {
-                        ArrayList<User> users = response.body();
-                        user = users.get(0);
-                        user_name_input.getEditText().setText(user.getName());
-                        user_last_name_input.getEditText().setText(user.getLast_name());
-                        user_email_input.getEditText().setText(user.getEmail());
-                        user_password_input.getEditText().setText(user.getPassword());
-                        setImage(user.getImage());
+                        ArrayList<User> user = response.body();
+                        user_name_input.getEditText().setText(user.get(0).getName());
+                        user_last_name_input.getEditText().setText(user.get(0).getLast_name());
+                        user_email_input.getEditText().setText(user.get(0).getEmail());
+                        user_password_input.getEditText().setText(user.get(0).getPassword());
+                        setImage(user.get(0).getImage());
                     }
                 } else {
                     try {
@@ -134,12 +139,12 @@ public class UserProfileEditActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    if (response.code() == 201) {
+                    if (response.code() == 200) {
                         //Decidir que fer
                         System.out.println("Actualitzat");
-                        Intent intent = UserProfileActivity.newIntent(UserProfileEditActivity.this);
+                        Intent intent = EventsActivity.newIntent(getApplicationContext());
                         startActivity(intent);
-                        finish();
+                       // finish();
                     }
                     else if (response.code() == 400){
                         Toast.makeText(getApplicationContext(), getString(R.string.BodyError), Toast.LENGTH_LONG).show();
