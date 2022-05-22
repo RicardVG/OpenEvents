@@ -1,20 +1,36 @@
 package com.androidpprog2.openevents.presentation;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.persistance.APIClient;
+import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.security.auth.callback.Callback;
+
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CreateEventFragment extends Fragment implements Callback {
 
@@ -29,6 +45,7 @@ public class CreateEventFragment extends Fragment implements Callback {
     private TextInputLayout endTimeInput;
     private TextInputLayout capacityInput;
     private TextInputLayout categoryInput;
+    private TextView titleCreateEvent;
 
 
     @Override
@@ -36,10 +53,8 @@ public class CreateEventFragment extends Fragment implements Callback {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         View view =  inflater.inflate(R.layout.fragment_create_event, container, false);
+
         createButton = view.findViewById(R.id.create_button);
-
-
-
         nameInput = view.findViewById(R.id.createEvent_name);
         locationInput = view.findViewById(R.id.createEvent_location);
         descriptionInput = view.findViewById(R.id.createEvent_description);
@@ -50,11 +65,9 @@ public class CreateEventFragment extends Fragment implements Callback {
         capacityInput = view.findViewById(R.id.createEvent_capacity);
         categoryInput = view.findViewById(R.id.createEvent_category);
 
-
         startDateInput.getEditText().setInputType(InputType.TYPE_NULL);
         endDateInput.getEditText().setInputType(InputType.TYPE_NULL);
-
-        //validationListeners();
+        titleCreateEvent = view.findViewById(R.id.titleCreateEvent);
 
         createButton.setOnClickListener(v -> { create_Event(); });
 
@@ -75,34 +88,71 @@ public class CreateEventFragment extends Fragment implements Callback {
             String category = categoryInput.getEditText().getText().toString();
             String capacity = capacityInput.getEditText().getText().toString();
 
-          //  loading(true);
 
-            if (getActivity() instanceof EventsActivity){
-                ((EventsActivity) getActivity()).insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
-
-            }
+            insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
 
         }
     }
 
-    public void loading(boolean state) {
-        boolean enable = !state;
+    @SuppressLint("SimpleDateFormat")
+    public void insertEvent(String name, String image, String location, String description, String eventStart_date,
+                            String eventEnd_date, String type, String capacity) {
+        Retrofit retrofit = APIClient.getRetrofitInstance();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
-        createButton.setEnabled(enable);
-        nameInput.setEnabled(enable);
-        locationInput.setEnabled(enable);
-        descriptionInput.setEnabled(enable);
-        startDateInput.setEnabled(enable);
-        startTimeInput.setEnabled(enable);
-        endDateInput.setEnabled(enable);
-        endTimeInput.setEnabled(enable);
-        categoryInput.setEnabled(enable);
-        capacityInput.setEnabled(enable);
+     /*   SharedPreferences sh;
+        sh = getSharedPreferences("sh",MODE_PRIVATE);
+        String accessToken = sh.getString("accessToken","Bearer");
+        System.out.println(accessToken);
+
+      */
+
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = new SimpleDateFormat("dd/MM/yyyy").parse(eventStart_date);
+            endDate = new SimpleDateFormat("dd/MM/yyyy").parse(eventEnd_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int n_participators;
+        n_participators = Integer.parseInt(capacity);
+
+        Call<Event> call = service.createEvent(
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM",name,image,location,description,startDate,endDate,n_participators,type);
+
+        call.enqueue(new retrofit2.Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 201) {
+                        Toast.makeText(getContext(), R.string.createEvent_correct, Toast.LENGTH_SHORT).show();
+                        Intent intent = EventsActivity.newIntent(getContext());
+                        startActivity(intent);
+                    }
+                    else if (response.code() == 400){
+                        Toast.makeText(getContext(),"Data is incorrect! Please enter another information", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    try {
+                        System.out.println(response.errorBody().toString());
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
 
     }
-
-
-
 
 
     public boolean validateName(String name){

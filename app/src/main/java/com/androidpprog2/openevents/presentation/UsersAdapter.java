@@ -24,7 +24,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapterViewHolder> {
 
     ArrayList<User> users;
-    Context context;
+    private Context context;
 
     public UsersAdapter(ArrayList<User> users, Context context) {
         this.users = users;
@@ -35,7 +35,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
     @Override
     public UsersAdapter.UsersAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_user, parent, false);
-        return null;
+        return new UsersAdapter.UsersAdapterViewHolder(view);
     }
 
     @Override
@@ -61,16 +61,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
 
         public UsersAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.user_image = itemView.findViewById(R.id.user_image);
-            this.user_name = itemView.findViewById(R.id.userName);
-            this.user_lastName = itemView.findViewById(R.id.userLastName);
-            this.user_id = itemView.findViewById(R.id.userID);
-            this.user_email = itemView.findViewById(R.id.userEmail);
+            this.user_image = (ImageView) itemView.findViewById(R.id.userImage);
+            this.user_name = (TextView) itemView.findViewById(R.id.userName);
+            this.user_lastName = (TextView) itemView.findViewById(R.id.userLastName);
+            this.user_id = (TextView) itemView.findViewById(R.id.userID);
+            this.user_email = (TextView) itemView.findViewById(R.id.userEmail);
         }
 
-        public void bind(User user, Context context) {
-            this.user = user;
-            this.context = context;
+        public void bind(User _user, Context _context) {
+            this.user = _user;
+            this.context = _context;
 
             String url = "";
             if (this.user.getImage() != null) {
@@ -80,19 +80,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
                     url = "http://172.16.205.68/img/" + this.user.getImage();
                 }
             }
+
+
+
             Glide.with(context)
                     .load(url)
                     .apply(RequestOptions
                             .bitmapTransform(new BlurTransformation(10, 3))
                             .placeholder(R.drawable.default_event)
-                            .error(R.drawable.default_event))
+                            .error(R.drawable.icon_profile))
                     .into(user_image);
 
 
-            this.userCard.setOnClickListener(this);
+          //  this.userCard.setOnClickListener(this);
             this.user_name.setText(this.user.getName());
             this.user_lastName.setText(this.user.getLast_name());
-            this.user_id.setText(this.user.getId());
+            this.user_id.setText(Integer.toString(this.user.getId()));
             this.user_email.setText(this.user.getEmail());
         }
 

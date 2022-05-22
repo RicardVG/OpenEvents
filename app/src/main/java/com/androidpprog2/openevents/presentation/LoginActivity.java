@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button sign_in;
     private TextView sign_up;
     private String emailRegister, passwordRegister;
+    private User user;
 
 
 
@@ -88,19 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         Call<LoginRequest> callLoginRequest = service.loginUser(loginRequest);
 
        User user = new User(email, password);
-       /*
-        ArrayList<User> userArrayList = new ArrayList<>();
-        Bundle bundle = new Bundle();
-
-        for (User u : userArrayList) {
-            if(email.equals(user.getEmail())){
-               bundle.putString("id",getString(user.getId()));
-            }
-            break;
-        }
-
-
-      */
 
 
         callLoginRequest.enqueue(new Callback<LoginRequest>() {
@@ -109,11 +97,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
                 Log.d("MAIN","TODOOK");
                 if (response.code() == 200){
+
                     SharedPreferences sh = getSharedPreferences("sh",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
-                    editor.putString("accessToken","Bearer " + response.body().getAccessToken() + user.getId());
+                    editor.putString("email", email);
                     editor.apply();
-                    System.out.println(sh.getString("accessToken","Bearer"));
+                 //   System.out.println(sh.getString("accessToken","Bearer"));
                     Intent intent = EventsActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finish();

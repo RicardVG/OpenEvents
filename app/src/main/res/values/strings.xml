@@ -66,4 +66,5 @@
     <string name="PasswordError">The password is wrong!</string>
     <string name="BodyError">Body Error!</string>
     <string name="IncorrectInsert">Incorrect insert data!</string>
+    <string name="CreateEvent">Create Event</string>
 </resources>

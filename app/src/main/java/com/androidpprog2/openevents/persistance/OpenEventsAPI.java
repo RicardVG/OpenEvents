@@ -58,7 +58,7 @@ public interface OpenEventsAPI {
 
 
     @DELETE("events/{id}")
-    Call<Void> deleteEvent(@Header("authorization") String token, @Path("id") int id);
+    Call<Event> deleteEvent(@Header("Authorization") String accessToken, @Path("id") int id);
 
     @GET("users/{id}")
     Call<ArrayList<User>> getUserProfile(@Header("Authorization") String accessToken, @Path("id") int id);

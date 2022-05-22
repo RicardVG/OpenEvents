@@ -2,6 +2,9 @@
     <item android:id="@+id/home"
         android:title="@string/Home"
         android:icon="@drawable/icon_home" />
+    <item android:id="@+id/createEvent"
+        android:title="@string/CreateEvent"
+        android:icon="@drawable/ic_baseline_add_box_24" />
     <item android:id="@+id/profile"
         android:title="@string/Profile"
         android:icon="@drawable/icon_profile" />

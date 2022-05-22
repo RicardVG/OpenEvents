@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -23,10 +24,13 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Objects;
@@ -47,8 +51,6 @@ public class UserProfileFragment extends Fragment {
     private TextView num_comments;
     private TextView percentage_commenters_below;
     private ImageView log_out;
-    private static String accessToken;
-    private int id;
     private SharedPreferences sh;
 
     public UserProfileFragment() {
@@ -73,7 +75,7 @@ public class UserProfileFragment extends Fragment {
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startUpdateActivity();
+          //      startUpdateActivity();
             }
         });
 
@@ -85,35 +87,76 @@ public class UserProfileFragment extends Fragment {
         });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        id = preferences.getInt("id", getId());
+        String id_final = preferences.getString("id","0");
+        int id = Integer.parseInt(id_final);
 
-
-/*
-       if (getActivity() instanceof UserProfileActivity){
-            ((UserProfileActivity) getActivity()).setProfileInformation(id, profileImage, profileName, profileLastName, profileEmail, avg_score, num_comments, percentage_commenters_below);
-        }
-
-
- */
-
-        Intent intent = UserProfileActivity.newIntent(getContext());
-
-    //   Intent intent = new Intent(getActivity().getBaseContext(),UserProfileActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("profileName", String.valueOf(profileName));
-        intent.putExtra("profileLastName", String.valueOf(profileLastName));
-        intent.putExtra("profileEmail", String.valueOf(profileEmail));
-        intent.putExtra("avg_score", String.valueOf(avg_score));
-        intent.putExtra("num_comments", String.valueOf(num_comments));
-        intent.putExtra("percentage_commenters_below", String.valueOf(percentage_commenters_below));
-
-        startActivity(intent);
-
-     //   return inflater.inflate(R.layout.fragment_profile, null);
-
+        setProfileInformation(id,profileImage,profileName,profileLastName,profileEmail, avg_score, num_comments,percentage_commenters_below);
 
         return view;
     }
+
+
+    public void setProfileInformation(int id, ImageView image, TextView name, TextView last_name, TextView email, TextView avg_score, TextView num_comments, TextView percentage_commenters_below) {
+
+        Retrofit retrofit = APIClient.getRetrofitInstance();
+        OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
+        /*
+        SharedPreferences sh;
+        sh = getSharedPreferences("sh",MODE_PRIVATE);
+        String accessToken = sh.getString("accessToken","Bearer");
+
+         */
+
+        Call<ArrayList<User>> call = service.getUserProfile("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
+        call.enqueue(new Callback<ArrayList<User>>() {
+            @Override
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 200) {
+                        ArrayList<User> user = response.body();
+                        name.setText(user.get(0).getName());
+                        last_name.setText(user.get(0).getLast_name());
+                        email.setText(user.get(0).getEmail());
+                  //      avg_score.setText(user.get(0).getAvg_score());
+                   //     num_comments.setText(user.get(0).getNum_comments());
+                   //     percentage_commenters_below.setText(user.get(0).getPercentage_commenters_below());
+                        setImage(user.get(0).getImage(), image);
+                    }
+                } else {
+                    try {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void setImage(String image, ImageView imageView) {
+        String url = "";
+        if (image != null) {
+            if (image.startsWith("http")) {
+                url = image;
+            } else {
+                url = "http://puigmal.salle.url.edu/img/" + image;
+            }
+        }
+
+        RequestOptions options = new RequestOptions()
+                .error(R.drawable.img_default);
+        Glide.with(getContext())
+                .applyDefaultRequestOptions(options)
+                .load(url)
+                .into(imageView);
+    }
+
 
     private void loginOut() {
         deleteToken();
@@ -125,30 +168,10 @@ public class UserProfileFragment extends Fragment {
     private void deleteToken() {
         sh = requireContext().getSharedPreferences("sh", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sh.edit();
-        editor.remove(accessToken);
+        editor.remove("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM");
         editor.apply();
     }
-
 /*
-    @RequiresApi(api = Build.VERSION_CODES.O) public static int getUserId() {
-        String[] chunks = accessToken.split("\\.");
-        Base64.Decoder decoder = Base64.getDecoder();
-        String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
-        JSONObject jsonObject;
-        int id = 0;
-        try {
-            jsonObject = new JSONObject(payload);
-            id = (int) jsonObject.get("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-
-
- */
-
      private void startUpdateActivity() {
          Intent intent = UserProfileEditActivity.newIntent(getContext());
          intent.putExtra("id_user",id);
@@ -156,6 +179,6 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-
+ */
 
 }
