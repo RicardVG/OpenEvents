@@ -1,24 +1,18 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.activities;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.text.ParseException;
 import java.util.ArrayList;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +20,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class InfoUserActivity extends AppCompatActivity {
-
     private TextView userName;
     private TextView userLastName;
     private TextView user_id;
@@ -34,7 +27,6 @@ public class InfoUserActivity extends AppCompatActivity {
     private ImageView user_image;
     private User user;
     private Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +43,6 @@ public class InfoUserActivity extends AppCompatActivity {
     }
 
     private void getAllInfoUser() {
-
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
@@ -72,12 +63,10 @@ public class InfoUserActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
-
             }
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -88,8 +77,6 @@ public class InfoUserActivity extends AppCompatActivity {
         userLastName.setText(user.getLast_name());
         user_id.setText(String.valueOf(user.getId()));
         user_email.setText(user.getEmail());
-        //user_image.setImageResource(R.drawable.icon_profile);
-
 
         String url = "";
 
@@ -107,10 +94,5 @@ public class InfoUserActivity extends AppCompatActivity {
                         .placeholder(R.drawable.icon_profile_user)
                         .error(R.drawable.icon_profile_user))
                 .into(user_image);
-
-
-
-
-
     }
 }

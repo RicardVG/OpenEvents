@@ -1,8 +1,7 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -11,23 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
-
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.androidpprog2.openevents.presentation.activities.EventsActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.security.auth.callback.Callback;
-
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -45,7 +40,6 @@ public class CreateEventFragment extends Fragment implements Callback {
     private TextInputLayout endTimeInput;
     private TextInputLayout capacityInput;
     private TextInputLayout categoryInput;
-    private TextView titleCreateEvent;
 
 
     @Override
@@ -64,10 +58,9 @@ public class CreateEventFragment extends Fragment implements Callback {
         endTimeInput = view.findViewById(R.id.createEvent_endTime);
         capacityInput = view.findViewById(R.id.createEvent_capacity);
         categoryInput = view.findViewById(R.id.createEvent_category);
-
         startDateInput.getEditText().setInputType(InputType.TYPE_NULL);
         endDateInput.getEditText().setInputType(InputType.TYPE_NULL);
-        titleCreateEvent = view.findViewById(R.id.titleCreateEvent);
+        TextView titleCreateEvent = view.findViewById(R.id.titleCreateEvent);
 
         createButton.setOnClickListener(v -> { create_Event(); });
 
@@ -79,7 +72,6 @@ public class CreateEventFragment extends Fragment implements Callback {
     private void create_Event() {
 
         if(validateData()){
-
             String name = nameInput.getEditText().getText().toString();
             String location = locationInput.getEditText().getText().toString();
             String description = descriptionInput.getEditText().getText().toString();
@@ -87,7 +79,6 @@ public class CreateEventFragment extends Fragment implements Callback {
             String endDate = endDateInput.getEditText().getText().toString();
             String category = categoryInput.getEditText().getText().toString();
             String capacity = capacityInput.getEditText().getText().toString();
-
 
             insertEvent(name, DEFAULT_IMG, location, description, startDate, endDate, category, capacity);
 
@@ -97,15 +88,9 @@ public class CreateEventFragment extends Fragment implements Callback {
     @SuppressLint("SimpleDateFormat")
     public void insertEvent(String name, String image, String location, String description, String eventStart_date,
                             String eventEnd_date, String type, String capacity) {
+
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
-
-     /*   SharedPreferences sh;
-        sh = getSharedPreferences("sh",MODE_PRIVATE);
-        String accessToken = sh.getString("accessToken","Bearer");
-        System.out.println(accessToken);
-
-      */
 
         Date startDate = null;
         Date endDate = null;
@@ -143,17 +128,12 @@ public class CreateEventFragment extends Fragment implements Callback {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
                 Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
             }
-
         });
-
-
     }
-
 
     public boolean validateName(String name){
         if(!name.isEmpty()){
@@ -253,7 +233,4 @@ public class CreateEventFragment extends Fragment implements Callback {
         if(!validateEndTime(endTimeInput.getEditText().getText().toString())) error = false;
         return error;
     }
-
-
-
 }

@@ -1,8 +1,5 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.adapters;
 
-
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,24 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.presentation.activities.InfoEventActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.card.MaterialCardView;
-
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
-
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsListViewHolder> {
     ArrayList<Event> events;
@@ -69,19 +59,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
         private TextView date;
         private TextView category;
         private MaterialCardView eventCard;
-        private ImageView deleteEventButton;
         public EventsListViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.deleteEventButton = itemView.findViewById(R.id.deleteEvent);
             this.event_image = (ImageView) itemView.findViewById(R.id.eventImageList);
             this.name = (TextView) itemView.findViewById(R.id.eventTitleList);
             this.location = (TextView) itemView.findViewById(R.id.eventLocationList);
             this.date = (TextView) itemView.findViewById(R.id.eventDateList);
             this.category = (TextView) itemView.findViewById(R.id.eventCategoryList);
             this.eventCard = (MaterialCardView) itemView.findViewById(R.id.event_card);
-
-
-
         }
 
         public void bind(Event _event, Context _context) throws ParseException {
@@ -110,7 +95,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.location.setText(this.event.getLocation());
             this.date.setText(this.event.getStartDate());
             this.category.setText(this.event.getType());
-
         }
 
         @Override
@@ -119,8 +103,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("id", this.event.getId());
             this.context.startActivity(intent);
-
-
         }
     }
 }

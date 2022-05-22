@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,18 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.User;
+import com.androidpprog2.openevents.presentation.activities.InfoUserActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.card.MaterialCardView;
-
 import java.util.ArrayList;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapterViewHolder> {
@@ -79,8 +76,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
                 }
             }
 
-
-
             Glide.with(context)
                     .load(url)
                     .apply(RequestOptions
@@ -93,8 +88,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
             this.userCard.setOnClickListener(this);
             this.user_name.setText(this.user.getName());
             this.user_lastName.setText(this.user.getLast_name());
-       //     this.user_id.setText(Integer.toString(this.user.getId()));
-       //     this.user_email.setText(this.user.getEmail());
         }
 
         @Override

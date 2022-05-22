@@ -1,34 +1,24 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.activities;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
 
 public class InfoEventActivity extends AppCompatActivity {
 
@@ -41,14 +31,12 @@ public class InfoEventActivity extends AppCompatActivity {
     private TextView descriptionEvent;
     private ImageView imageEvent;
     private SharedPreferences sh;
-
     private Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_event);
-
 
         eventName = findViewById(R.id.event_name);
         typeEvent = findViewById(R.id.event_type);
@@ -62,15 +50,12 @@ public class InfoEventActivity extends AppCompatActivity {
         findEvent();
     }
 
-
-    //pilar la id i passarli
     private void findEvent() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
         int id = getIntent().getExtras().getInt("id");
-       // sh = getSharedPreferences("sh",MODE_PRIVATE);
-       // String accessToken = sh.getString("accessToken","Bearer");
+
         Call<ArrayList<Event>> call = service.getEvent("Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM", id);
         call.enqueue(new Callback<ArrayList<Event>>() {
             @Override
@@ -90,25 +75,18 @@ public class InfoEventActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
-                
             }
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
     }
 
     private void printEvent(Event event) throws ParseException {
-      //  @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy · hh:mm a");
-
         eventName.setText(event.getName());
         typeEvent.setText(event.getType());
-
-    //    Date date1 = formatter.parse(event.getStartDate());
         startDateEvent.setText(event.getStartDate());
-     //   Date date2 = formatter.parse(event.getEndDate());
         endDateEvent.setText(event.getEndDate());
         locationEvent.setText(event.getLocation());
         participantsEvent.setText(String.valueOf(event.getNumParticipants()));
@@ -130,8 +108,6 @@ public class InfoEventActivity extends AppCompatActivity {
                         .placeholder(R.drawable.default_event)
                         .error(R.drawable.default_event))
                 .into(imageEvent);
-
-
     }
 }
 

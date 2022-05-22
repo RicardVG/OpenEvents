@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +17,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
+                Intent intent=new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

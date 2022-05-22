@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,29 +9,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
+import com.androidpprog2.openevents.presentation.adapters.UsersAdapter;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UsersFragment extends Fragment {
-
-
     private RecyclerView usersRecycleView;
     private UsersAdapter users_adapter;
     private ArrayList<User> users_list;
@@ -44,15 +38,12 @@ public class UsersFragment extends Fragment {
         usersRecycleView = view.findViewById(R.id.usersRecycleView);
         TextInputEditText textSearch = view.findViewById(R.id.inputUserSearch);
         ImageView searchUsersImageView = view.findViewById(R.id.searchUserButton);
-
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         usersRecycleView.setLayoutManager(llm);
-
         TextView titleUsers = view.findViewById(R.id.titleUsers);
 
         getUsers();
-
 
         searchUsersImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +52,6 @@ public class UsersFragment extends Fragment {
                 searchUsers(test);
             }
         });
-
         return view;
     }
 
@@ -82,11 +72,9 @@ public class UsersFragment extends Fragment {
                     Toast.makeText(getContext(), "Incorrect data. Please try again!", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 Toast.makeText(getContext(),"NO INTERNET",Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -96,9 +84,7 @@ public class UsersFragment extends Fragment {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
 
-
         Call<ArrayList<User>> call = service.getUsers(accessToken);
-
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
@@ -109,9 +95,7 @@ public class UsersFragment extends Fragment {
                         usersRecycleView.setAdapter(users_adapter);
 
                         SharedPreferences preferences = getActivity().getSharedPreferences("sh", Context.MODE_PRIVATE);
-
                         String email_rebut = preferences.getString("email",null);
-
                         SharedPreferences.Editor editor = preferences.edit();
 
                         for (int i = 0; i < users_list.size(); i++){
@@ -121,9 +105,6 @@ public class UsersFragment extends Fragment {
                                 editor.apply();
                             }
                         }
-
-
-
                     }
                 } else {
                     Toast.makeText(getContext(), "Incorrect data. Please try again!", Toast.LENGTH_LONG).show();

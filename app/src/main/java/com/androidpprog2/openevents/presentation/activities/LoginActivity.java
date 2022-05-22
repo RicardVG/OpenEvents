@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.presentation;
+package com.androidpprog2.openevents.presentation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,27 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.androidpprog2.openevents.R;
-//import com.androidpprog2.openevents.UserAToken;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.APIClient;
 import com.androidpprog2.openevents.persistance.OpenEventsAPI;
 import com.androidpprog2.openevents.business.LoginRequest;
 
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView sign_up;
     private String emailRegister, passwordRegister;
     private User user;
-
-
 
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, LoginActivity.class);
@@ -52,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         emailRegister = getIntent().getStringExtra("email");
         passwordRegister = getIntent().getStringExtra("password");
 
-
         emailLogin = (EditText) findViewById(R.id.editText);
         passwordLogin = (EditText) findViewById(R.id.editText2);
         sign_in = (Button) findViewById(R.id.sign_in);
@@ -66,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Button sign_in = this.findViewById(R.id.sign_in);
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,14 +65,11 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 sign_in(emailLogin.getText().toString(), passwordLogin.getText().toString());
-
-
             }
         });
     }
 
     private void sign_in(String email, String password){
-
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         LoginRequest loginRequest = new LoginRequest(email,password);
@@ -90,28 +77,21 @@ public class LoginActivity extends AppCompatActivity {
 
        User user = new User(email, password);
 
-
         callLoginRequest.enqueue(new Callback<LoginRequest>() {
 
             @Override
             public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
-                Log.d("MAIN","TODOOK");
                 if (response.code() == 200){
-
                     SharedPreferences sh = getSharedPreferences("sh",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
                     editor.putString("email", email);
                     editor.apply();
-                 //   System.out.println(sh.getString("accessToken","Bearer"));
                     Intent intent = EventsActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Incorrect data! Please try again",Toast.LENGTH_SHORT).show();
-
                 }
-
-
             }
             @Override
             public void onFailure(Call<LoginRequest> callUserToken, Throwable t) {

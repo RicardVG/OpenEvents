@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.InfoEventActivity">
+    tools:context=".presentation.activities.InfoEventActivity">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -243,12 +243,6 @@
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@+id/event_detail_header_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Button
-                android:id="@+id/delete_event_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_delete_event" />
 
 
 </LinearLayout>

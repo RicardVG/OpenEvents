@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenEvents">
-        <activity android:name=".presentation.SplashActivity"
+        <activity android:name=".presentation.activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.LoginActivity">
+            android:name=".presentation.activities.LoginActivity">
         </activity>
-        <activity android:name=".presentation.RegisterActivity">
+        <activity android:name=".presentation.activities.RegisterActivity">
         </activity>
-        <activity android:name=".presentation.EventsActivity">
+        <activity android:name=".presentation.activities.EventsActivity">
         </activity>
-        <activity android:name=".presentation.InfoEventActivity">
+        <activity android:name=".presentation.activities.InfoEventActivity">
         </activity>
-        <activity android:name=".presentation.UserProfileEditActivity">
+        <activity android:name=".presentation.activities.UserProfileEditActivity">
         </activity>
-        <activity android:name=".presentation.UsersActivity">
+        <activity android:name=".presentation.activities.UsersActivity">
         </activity>
-        <activity android:name=".presentation.InfoUserActivity">
+        <activity android:name=".presentation.activities.InfoUserActivity">
         </activity>
     </application>
 
