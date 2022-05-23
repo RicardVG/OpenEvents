@@ -24,6 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Aquesta activity ens permetrà implementar la funcionalitat de editar la informació de un usuari en
+//específic
 public class UserProfileEditActivity extends AppCompatActivity {
     private ImageView user_image;
     private TextInputLayout user_name_input;
@@ -44,13 +46,18 @@ public class UserProfileEditActivity extends AppCompatActivity {
         user_password_input = findViewById(R.id.input_password);
         applyChanges = findViewById(R.id.apply_changes_btn);
 
+        //Recuperem la id de l'usuari en específic a través del intent.
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         getUserInformation(id);
 
+        //Quan aquest buttó sigui pulsat cridarem la funcio saveChanges()
         applyChanges.setOnClickListener(v -> { saveChanges(); });
     }
 
+    //Aquesta funció rep per paràmetre la id del usuari i implementar la crida a la API.
+    //Li passarem el accessToken i la id de l'usuari i si la resposta és correcta,
+    //setejarem tota la informació corresponent. (name,last_name, email i password).
     private void getUserInformation(int id) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -83,6 +90,8 @@ public class UserProfileEditActivity extends AppCompatActivity {
         });
     }
 
+    //Aquesta funció si validateData() retorna true, posarà en cada variable tots els input de l'usuari.
+    //Posteriorment passarem totes aquestes variables a la funció updateUser().
     public void saveChanges() {
         if(validateData()){
             String name = user_name_input.getEditText().getText().toString();
@@ -95,6 +104,9 @@ public class UserProfileEditActivity extends AppCompatActivity {
         }
     }
 
+    //Aquesta funció rebrà per paràmetre totes els camps corresponents de l'usuari i els hi passarem
+    //a la API juntament amb el accessToken. Si la resposta és correcta farem un intent per tornar
+    //a la activity de Events i si no és correcta mostrarem per pantalla amb un Toast els diferents errors.
     private void updateUser(String name, String lastName, String email, String password, String image) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -130,6 +142,7 @@ public class UserProfileEditActivity extends AppCompatActivity {
         });
     }
 
+    //Aquesta funció valida si tota la informació entrada per l'usuari és vàl·lida o no.
     public boolean validateData(){
         boolean error = true;
         if(validateFirstName(user_name_input.getEditText().getText().toString())) error = false;

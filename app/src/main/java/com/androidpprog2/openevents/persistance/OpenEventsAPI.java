@@ -17,6 +17,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
+//Interfície que conté totes les trucades a la API.
 public interface OpenEventsAPI {
     @POST("users/login/")
     Call<LoginRequest> loginUser(

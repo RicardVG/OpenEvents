@@ -26,6 +26,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Aquest fragment tindrà diferents funcionalitats, com pot ser printar informació especifica de
+//l'usuari loguejat, així com informació personal o la possibilitat de donar-li a dos buttons,
+//com pot ser el log_out o el editar el perfil d'usuari.
 public class UserProfileFragment extends Fragment {
 
     private ImageView editProfileBtn;
@@ -55,6 +58,7 @@ public class UserProfileFragment extends Fragment {
         editProfileBtn = view.findViewById(R.id.editProfile);
         log_out = view.findViewById(R.id.log_out);
 
+        //A través d'aquest buttó ens permet cridar una funció anomenada loginOut() quan el pulsem.
         log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,11 +66,14 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+        //Recuperem la id del usuari en específic a través de Shared Preferences.
         SharedPreferences preferences = getActivity().getSharedPreferences("sh", Context.MODE_PRIVATE);
         String id_final = preferences.getString("id","0");
         SharedPreferences.Editor editor = preferences.edit();
         int id = Integer.parseInt(id_final);
 
+        //Aquest buttó ens permetrà cridar a al funcio startUpdateActivity() la qual li passarem
+        //la id del usuari en concret al polsar.
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +86,9 @@ public class UserProfileFragment extends Fragment {
         return view;
     }
 
+    //Aquesta funció rebrà una id per paràmetre i farà la crida de la API de la funcionalitat
+    //de mostrar les estadístiques de un usuari. Per això, li passarem a la API, el accessToken i la
+    //id de l'usuari en específic i si la resposta és correcta, setejàrem la informació corresponent.
     public void setStadistics(int id) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -108,6 +118,12 @@ public class UserProfileFragment extends Fragment {
             }
         });
     }
+
+    //Aquesta funció rebrà per paràmetre tota la informació corresponent de l'usuari.
+    //Farem una crida a la API per agafar tota la informació de l'usuari passantli a la API
+    //primerament el accessToken i la id del usuari en específic.
+    //Si la resposta de la API és satisfactoria guardarem aquesta resposta en la variable user
+    //Finalment setejarem la resposta en els camps corresponents.
     public void setProfileInformation(int id, ImageView image, TextView name, TextView last_name, TextView email, TextView avg_score, TextView num_comments, TextView percentage_commenters_below) {
 
         Retrofit retrofit = APIClient.getRetrofitInstance();
@@ -158,6 +174,8 @@ public class UserProfileFragment extends Fragment {
                 .into(imageView);
     }
 
+    //Aquesta funció inicialment cridarà la funció deleteToken(). Un cop executada, farem el intent
+    //per anar a la pantalla inicial de Login.
     private void loginOut() {
         deleteToken();
         Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -165,6 +183,7 @@ public class UserProfileFragment extends Fragment {
         startActivity(intent);
     }
 
+    //Aquesta funció elimina del Shared Preferences el accessToken.
     private void deleteToken() {
         sh = requireContext().getSharedPreferences("sh", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sh.edit();
@@ -172,6 +191,8 @@ public class UserProfileFragment extends Fragment {
         editor.apply();
     }
 
+    //Aquesta funció rebrà per paràmetre la id del usuari i farà el intent per anar a la activity
+    //UserProfileEdit. Li passarem a través del intent la id.
      private void startUpdateActivity(int id) {
          Intent intent = new Intent(getContext(), UserProfileEditActivity.class);
          intent.putExtra("id", id);

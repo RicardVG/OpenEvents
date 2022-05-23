@@ -27,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Fragment que ens permet implementar la funcionalitat de Crear un Event.
 public class CreateEventFragment extends Fragment implements Callback {
 
     private String DEFAULT_IMG = "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YXJ0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80";
@@ -42,6 +43,8 @@ public class CreateEventFragment extends Fragment implements Callback {
     private TextInputLayout categoryInput;
 
 
+    //Inflem un layout el qual té la vista del fragment. A més tindrem un buttó que ens permetrà
+    //cridar la funció de crear un evento.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -68,7 +71,7 @@ public class CreateEventFragment extends Fragment implements Callback {
     }
 
 
-
+    //Aquesta funció validateData() si és true, passa totes les variables a String i les passa a la funció insertEvent().
     private void create_Event() {
 
         if(validateData()){
@@ -85,6 +88,11 @@ public class CreateEventFragment extends Fragment implements Callback {
         }
     }
 
+
+    //Aquesta funció rep tota la informació per paràmetre per crear un evento. En aquest cas,
+    //com que la informació que ens demana la API com a entrada era una determinada, hem tingut
+    //que cambiar el tipus de variable de algunes variables. És el cas del numero de participants
+    //que l'hem tingut que cambiar a Integer. En el cas de les dates les hem parsejat.
     @SuppressLint("SimpleDateFormat")
     public void insertEvent(String name, String image, String location, String description, String eventStart_date,
                             String eventEnd_date, String type, String capacity) {
@@ -107,6 +115,7 @@ public class CreateEventFragment extends Fragment implements Callback {
         Call<Event> call = service.createEvent(
                 "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIxMywibmFtZSI6InJpY2FyZCIsImxhc3RfbmFtZSI6InZpw7FvbGFzIiwiZW1haWwiOiJyaWNhcmQxMjM0QGdtYWlsLmNvbSIsImltYWdlIjoicmZpcm5laWZuaSJ9.KstEBEE5wMDMxxiAIKX0jUm718W8DOtotK-KkdyRBoM",name,image,location,description,startDate,endDate,n_participators,type);
 
+        //Sí la resposta de la API és correcta mostrarem un missatge per pantalla i tornarem a la activity de Events, sino mostrarem els respectius missatges d'errors.
         call.enqueue(new retrofit2.Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
@@ -220,6 +229,9 @@ public class CreateEventFragment extends Fragment implements Callback {
         return false;
     }
 
+    //Aquesta funció retorna un booleà. Inicialment aquest booleà que detecta si hi ha hagut un error
+    //o on en l'entrada de dades està a true. Amb els diferents ifs, comprobar que l'entrada de la info
+    //sigui vàlida. En el cas afirmatiu passarem aquest booleà a false i retornarem aquesta variable.
     public boolean validateData(){
         boolean error = true;
         if(!validateName(nameInput.getEditText().getText().toString())) error = false;

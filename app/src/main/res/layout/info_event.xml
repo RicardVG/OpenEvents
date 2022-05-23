@@ -27,7 +27,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="The Rolling Stones Experience" />
+                        android:text="La Pizzeria Papa Louie" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -36,17 +36,17 @@
 
                         <TextView
                             android:id="@+id/event_type"
-                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/category_type"
                             android:paddingLeft="25dp"
                             android:paddingRight="25dp"
-                            android:layout_marginRight="15dp"
+                            android:text="Pikachu"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:text="Tech"
-                            android:textSize="15sp"/>
+                            app:layout_constraintEnd_toEndOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="Starts May 25, 2021 · 22:00 pm" />
+                            android:text="Starts May 25, 2022 · 22:00 pm" />
 
                         <TextView
                             android:id="@+id/event_end_date"
@@ -118,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="Ends May 25, 2021 · 02:00 am" />
+                            android:text="Ends May 25, 2022 · 02:00 am" />
 
                     </LinearLayout>
 
@@ -150,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Ends May 25, 2021 · 02:00 am" />
+                        android:text="Ends May 25, 2022 · 02:00 am" />
 
                 </LinearLayout>
 

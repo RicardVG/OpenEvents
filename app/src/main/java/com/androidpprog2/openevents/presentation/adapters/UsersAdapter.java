@@ -90,6 +90,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersAdapter
             this.user_lastName.setText(this.user.getLast_name());
         }
 
+        //Aquesta funció s'executarà si li donem a un card de un usuari. Si és així ens dirigirem a la
+        //activity de InfoUser. També li passarem a través del intent la id de l'usuari.
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, InfoUserActivity.class);

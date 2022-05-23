@@ -19,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Aquesta activity ens permet printar informació més detalla de un usuari.
 public class InfoUserActivity extends AppCompatActivity {
     private TextView userName;
     private TextView userLastName;
@@ -42,6 +43,9 @@ public class InfoUserActivity extends AppCompatActivity {
         getAllInfoUser();
     }
 
+    //Aquesta funció implementa la crida a la API de rebre la informació de un usuari.
+    //Li passarem el accessToken i la id específica. Si al resposta és correcta passarem aquest usuari
+    //guardat a la funció printUser().
     private void getAllInfoUser() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -72,6 +76,7 @@ public class InfoUserActivity extends AppCompatActivity {
 
     }
 
+    //Aquesta funció rebrà per paràmetre l'usuari i setejarà tota la informació a cada camp.
     private void printUser(User user) {
         userName.setText(user.getName());
         userLastName.setText(user.getLast_name());

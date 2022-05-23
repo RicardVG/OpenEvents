@@ -15,6 +15,7 @@ import com.androidpprog2.openevents.presentation.fragments.UsersFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+//Aquesta activitat conté la lògica dels fragments i com ens movem entre ells.
 public class EventsActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     public EventsActivity() {
@@ -25,6 +26,10 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         return intent;
     }
 
+    //Aquesta funció rep un fragment i retorna un booleà. Si es diferent a null, reemplaça, el fragment
+    //que rep per paràmetre a un fragment_container. Podriem dir que aquest fragment_container
+    //seria l'espai on es reemplaça el fragment corresponent. Si és així retornarem true mentre que si
+    //no el reemplaça retornarem false.
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
@@ -36,6 +41,10 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         return false;
     }
 
+
+    //Inicialment, cargem un fragment per defecte, en aquest cas Home Fragment. Això ho fem a través
+    //de la funció loadFragment() la qual li passem un fragment. A través BottomNavigationView,
+    //podem desplaçarnos a través dels diferents items amb la funció .setOnItemSelectedListener.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +54,11 @@ public class EventsActivity extends AppCompatActivity implements NavigationBarVi
         navigation.setOnItemSelectedListener(this);
     }
 
+
+    //Aquesta funció ens permet navegar entre els diferents fragments. Això ho fem, a través
+    //de un menu inferior el qual quan polsem una icona, ens mou cap al fragment determinat.
+    //Ho controlem mitjançant un switch agafant la id del item determinat. Ens retornarà un fragment
+    //en qualsevol cas.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;

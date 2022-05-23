@@ -33,8 +33,6 @@
         </activity>
         <activity android:name=".presentation.activities.UserProfileEditActivity">
         </activity>
-        <activity android:name=".presentation.activities.UsersActivity">
-        </activity>
         <activity android:name=".presentation.activities.InfoUserActivity">
         </activity>
     </application>

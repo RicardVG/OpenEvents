@@ -53,49 +53,48 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:textColor="@color/black"
-                    android:layout_weight="1"
                     android:id="@+id/eventTitleList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Global Code"
-                    android:textSize="25sp"
-                    android:maxLines="1"
+                    android:layout_weight="1"
                     android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Technology "
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:textColor="@color/black"
                     android:id="@+id/eventCategoryList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/category_lados"
                     android:gravity="right"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
-                    android:layout_marginRight="15dp"
-                    android:text="Tech"
-                    android:textSize="15sp"
-                    />
+                    android:text="Pikachu"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/eventLocationList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Los Angeles, California"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Texas, EEUU"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/eventDateList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="21/03/2021  -  25/03/2021"
+                android:text="23/05/2022  -  25/05/2022"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>

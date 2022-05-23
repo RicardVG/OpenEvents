@@ -23,11 +23,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Aquest és el fragment inicial que es carrega.
 public class HomeFragment extends Fragment {
     private RecyclerView events_recyclerView;
     private EventsAdapter eventsAdapter;
     private TextView titleMyEvents;
 
+
+    //Inflarem inicialment un layout que contrindrà la recycleview de events i cridem una funció
+    //anomenada getEvents(). Finalment retornarem la vista.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +46,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //Aquesta funció ens permet implementar la crida a la API de mostrar tots els eventos.
+    //Li passarem el accessToken indicant que ha fet un login, i si la resposta és correcta
+    //ens guardarem a una variable anomenada created la resposta de la API. Aquesta variable
+    //serà un arraylist de eventos. Finalment, li passarem al adapter aquesta arraylist i setejarem
+    //a la recycleview aquest adapter, perquè ens printi per pantalla tots els eventos.
     public void getEvents() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);

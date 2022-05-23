@@ -19,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Activitat que conté tota la lògica de registrar un usuari.
 public class RegisterActivity extends AppCompatActivity {
 
     EditText name, last_name, password, email, image;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         image = (EditText) findViewById(R.id.editText8);
         create_account = (Button) findViewById(R.id.create_account);
 
+        //Al donar a aquest buttó comprobarà que tots els camps estiguin plens. Si és així, cridem una funció anomenada create_account i li pasem tots els camps.
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    //Funció que rep totes les dades que ha entrat l'usuari i les guardem en un objecte anomenat User.
+    //Passarem una instància d'aquest objecte a la API. Si la resposta de la API és correcte
+    //tornarem a la pantalla de Login i sino mostrarem un missatge d'error.
     private void create_account(String email, String name, String last_name, String password, String image) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);

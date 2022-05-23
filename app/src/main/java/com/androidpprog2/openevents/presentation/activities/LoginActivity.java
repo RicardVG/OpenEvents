@@ -22,6 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
+//Activitat que conté tota la lògica de iniciar sessió de un usuari.
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailLogin,passwordLogin;
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         sign_in = (Button) findViewById(R.id.sign_in);
         sign_up = (TextView) findViewById(R.id.SignUp);
 
+        //Aquesta funció ens permet que quan pulsem al text de SignUP ens redirigeixi a través de un Intent a la Register Activity.
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Aquesta funció ens permet que quan pulsem al buttó de sign_in, primer comproba si els camps estan plens. Si no és així,
+        //salta per pantalla un missatge d'error fins que l'usuari entri els dos camps. Un cop entri els dos camps i li doni al buttó
+        //s'executa la funció de sign_in.
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,18 +75,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Aquesta funció conté la implementació de la crida de la API de iniciar sessió de un usuari.
+    //Li passem una instància de l'objecte Login Request que conté l'email i el password.
     private void sign_in(String email, String password){
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
         LoginRequest loginRequest = new LoginRequest(email,password);
         Call<LoginRequest> callLoginRequest = service.loginUser(loginRequest);
 
-       User user = new User(email, password);
-
         callLoginRequest.enqueue(new Callback<LoginRequest>() {
 
             @Override
             public void onResponse(Call<LoginRequest> callLoginRequest, Response<LoginRequest> response) {
+                //Si la resposta de la API és correcta ens guardem a Shared Preferences el correu de l'usuari i ens
+                //dirigim a la Events Activity. Si és incorrecte mostrem missatges d'errors.
                 if (response.code() == 200){
                     SharedPreferences sh = getSharedPreferences("sh",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();

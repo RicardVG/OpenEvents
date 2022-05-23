@@ -8,6 +8,9 @@ import android.os.Handler;
 import com.androidpprog2.openevents.R;
 
 
+//Aquesta activitat és la primera que salta i seria una pantalla que es mostra a l'usuari un total de 3 segons.
+//Aquesta pantalla ens permet donar pas a la pantalla inicial de Login.
+
 public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

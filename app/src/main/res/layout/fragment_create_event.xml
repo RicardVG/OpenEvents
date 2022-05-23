@@ -241,21 +241,8 @@
 
                 </com.google.android.material.button.MaterialButton>
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_button" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--  <View
-                  android:layout_width="wrap_content"
-                  android:layout_height="@dimen/navigation_space" />-->
         </LinearLayout>
 
     </ScrollView>

@@ -97,6 +97,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsList
             this.category.setText(this.event.getType());
         }
 
+        //Si fem click a un card de un Evento, ens dirigirem a la activity de InfoEvent.
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, InfoEventActivity.class);

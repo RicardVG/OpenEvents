@@ -25,6 +25,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Aquest fragment ens permetrà implementar diferents funcionalitats de usuaris com pot ser
+//printarlos per pantalla o buscar-los a través un buscador.
 public class UsersFragment extends Fragment {
     private RecyclerView usersRecycleView;
     private UsersAdapter users_adapter;
@@ -45,6 +47,8 @@ public class UsersFragment extends Fragment {
 
         getUsers();
 
+        //Quan polsem la imatge del cercador, ens guardarem en una variable el text que ha entrat l'usuari i
+        //li passarem a al funció searchUsers().
         searchUsersImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +59,11 @@ public class UsersFragment extends Fragment {
         return view;
     }
 
+    //Aquesta funció rebrà per paràmetre el String que ha entrat l'usuari i farà la crida a la API
+    //de buscar un Usuari. Li passarem el accessToken i aquest string esmentat.
+    //Si la resposta és correcta, farem el mateix procediment que en l'altre cas, és a dir,
+    //ens guardarem la resposta en una variable i li passarem aquest ArrayList de users al adapter
+    //Finalment setejarem a la RecycleView aquest adapter.
     public void searchUsers(String s) {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -80,6 +89,10 @@ public class UsersFragment extends Fragment {
 
     }
 
+    //Aquesta funció ens permetrà fer la crida a la API de agafar tots els usuaris.
+    //Un cop la resposta sigui correcta, la guardarem en una variable anomenada users_list,
+    //que la tindrem també declarada globalment. Li passarem al adapter aquest Arraylist de Users
+    // i setejarem la recycleview amb aquest adapter.
     public void getUsers() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -94,10 +107,15 @@ public class UsersFragment extends Fragment {
                         users_adapter = new UsersAdapter(users_list, getContext());
                         usersRecycleView.setAdapter(users_adapter);
 
+                        //Aqui recuperem a través de SharedPreferences el correu de un usuari.
                         SharedPreferences preferences = getActivity().getSharedPreferences("sh", Context.MODE_PRIVATE);
                         String email_rebut = preferences.getString("email",null);
                         SharedPreferences.Editor editor = preferences.edit();
 
+                        //Recorrem el ArrayList de Users i quan trobem que el correu de l'usuari
+                        //coincideix amb un de la ArrayList de Users ens guardem en una variable
+                        //anomenada id_final la id de l'usuari corresponent. Aquesta id la guardarem
+                        //al shared preferences.
                         for (int i = 0; i < users_list.size(); i++){
                             if(email_rebut.equals(users_list.get(i).getEmail())){
                                 int id_final = users_list.get(i).getId();

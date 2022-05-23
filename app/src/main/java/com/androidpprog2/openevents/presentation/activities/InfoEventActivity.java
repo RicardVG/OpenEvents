@@ -20,6 +20,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
+//Aquesta activity ens permet implementar la funcionalitat de veure més en detall la informació de un Evento.
 public class InfoEventActivity extends AppCompatActivity {
 
     private TextView eventName;
@@ -50,6 +52,11 @@ public class InfoEventActivity extends AppCompatActivity {
         findEvent();
     }
 
+
+    //Aquesta funció implementa al trucada a la API de agafar de un evento en concret. Per això,
+    //nosaltres haurem de rebre la id del evento en concret a través del intent i passarli a la API a part del accessToken corresponent.
+    //Si la resposta de la API és correcta ens guardarem el evento en concret i el més important
+    //és que li passarem aquest evento guardat a la funcio printEvent().
     private void findEvent() {
         Retrofit retrofit = APIClient.getRetrofitInstance();
         OpenEventsAPI service = retrofit.create(OpenEventsAPI.class);
@@ -83,6 +90,7 @@ public class InfoEventActivity extends AppCompatActivity {
         });
     }
 
+    //Aquesta funció rebre el evento en concret i setejarà tota la informació corresponent del evento.
     private void printEvent(Event event) throws ParseException {
         eventName.setText(event.getName());
         typeEvent.setText(event.getType());
